@@ -6,9 +6,11 @@
 # This script is used to sync/backup media directories from a central 
 # PLEX server. Run via crontab once a day, in the early AM hours.
 #
-# Run the script from the PLEX sattelite (LOCAL), which pulls from 
+# Run the script from the PLEX satellite (LOCAL), which pulls from 
 # the central PLEX server (REMOTE).  Pass variables accordingly.
-
+#
+# $LDRIVE (and all file paths) are relative to a specific box. Edit
+# the script to reflect your environment.
 
 # RUNNING THE SCRIPT
 # ------------------------------------------------------------------
@@ -53,5 +55,5 @@ LOCALPATH=(
 
 for index in ${!REMOTEPATH[*]}
 do
-	$RSYNC -avn -e "$SSH -i $KEY" $RUSER@$RHOST:${REMOTEPATH[$index]} ${LOCALPATH[$index]} 
+	$RSYNC -av -e "$SSH -i $KEY" $RUSER@$RHOST:${REMOTEPATH[$index]} ${LOCALPATH[$index]} 
 done
