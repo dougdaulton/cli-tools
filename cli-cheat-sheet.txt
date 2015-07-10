@@ -1,0 +1,102 @@
+# ---------------------------------------------
+# MISCELLANEOUS
+# ---------------------------------------------
+
+history | cut -c 8-               #history without line numbers
+
+# X11
+# ---------------------------------------------
+
+ssh -C -p 22 ddaulton@box.geeq.me -X ghb     # Run Handbrake GUI over X11
+
+# OSX INSTALL BREW
+# ---------------------------------------------
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install ssh-copy-id
+
+# ---------------------------------------------
+# CREATE SYSADMIN ACCOUNT
+# ---------------------------------------------
+mkdir /home/localuname
+passwd localuname
+# Enter new UNIX password:
+# Retype new UNIX password:
+# passwd: password updated successfully
+chown localuname:localuname /home/localuname
+adduser localuname sudo
+mkdir /home/localuname/scripts
+mkdir /home/localuname/logs
+
+# GENERATE SSH KEYS
+# ---------------------------------------------
+ssh-keygen -t rsa1    # save as localuname-localhost-rsa1, do not use passphrase
+ssh-keygen -t rsa     # save as localuname-localhost-rsa, do not use passphrase
+ssh-keygen -t dsa     # save as localuname-localhost-dsa, do not use passphrase
+
+scp ~/.ssh/localuname*.pub remoteuname@remotehost:/home/remoteuname/
+
+ssh remoteuname@remotehost
+
+cat identity.pub >>~/.ssh/authorized_keys
+cat id_dsa.pub >>~/.ssh/authorized_keys
+cat id_rsa.pub >>~/.ssh/authorized_keys
+
+rm identity.pub id_dsa.pub id_rsa.pub
+
+exit
+
+ssh remoteuname@remotehost
+
+# ---------------------------------------------
+# RIPPING STATION SETUP
+# ---------------------------------------------
+
+# INSTALL SSH
+sudo apt-get install openssh-client openssh-server
+
+# INSTALL SAMBA
+sudo apt-get install cifs-utils samba-common
+
+# INSTALL LATEST HANDBRAKE (VIDEO ENCODING)
+sudo add-apt-repository ppa:stebbins/handbrake-releases
+sudo apt-get update
+sudo apt-get install handbrake-gtk handbrake-cli
+
+# INSTALL Atomic Parsley (MP4 Tagging)
+sudo apt-get install atomicparsley
+
+# INSTALL TRANSMISSION
+sudo apt-get install transmission-remote-cli
+
+# INSTALL FLEXGET
+
+# ---------------------------------------------
+# MOUNT REMOTE DIRS WITH SSHFS
+# ---------------------------------------------
+
+# INSTALL FUSEOSX # EXT2FS
+# ---------------------------------------------
+
+# MOUNT DIRS PERMANENTLY
+# ---------------------------------------------
+
+# Mount Remote Drives on BISON
+# ------------------------------------
+sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@kodiak:/VOLUMES/KODIAK180GB1 /Users/dougdaulton/SSHFS/KODIAK/180GB1/ -oauto_cache,reconnect,volname=KODIAK_180A,local
+sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@kodiak:/VOLUMES/KODIAK180GB2 /Users/dougdaulton/SSHFS/KODIAK/180GB2/ -oauto_cache,reconnect,volname=KODIAK_180B,local
+sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@kodiak:/VOLUMES/KODIAK2TB /Users/dougdaulton/SSHFS/KODIAK/PLEX2TB/ -oauto_cache,reconnect,volname=PLEX_2TB,local
+sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@kodiak:/VOLUMES/KODIAK4TB1 /Users/dougdaulton/SSHFS/KODIAK/PLEX4TB1/ -oauto_cache,reconnect,volname=PLEX_4TB1,local
+sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@kodiak:/VOLUMES/KODIAK4TB2 /Users/dougdaulton/SSHFS/KODIAK/PLEX4TB2/ -oauto_cache,reconnect,volname=PLEX_4TB2,local
+sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@frog:/VOLUMES/FROG4TB /Users/dougdaulton/SSHFS/FROG/ -oauto_cache,reconnect,volname=FROG_4TB,local
+sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@tiger:/VOLUMES/TIGER4TB /Users/dougdaulton/SSHFS/TIGER/ -oauto_cache,reconnect,volname=TIGER_4TB,local
+
+
+# Mount Remote Drives on EAGLE
+# ------------------------------------
+sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KMGN801/ /home/KODIAK/DROBO5N/ -oauto_cache,reconnect,volname=KODIAK_5N,local
+sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK180GB2 /home/KODIAK/180SSD2 -oauto_cache,reconnect,volname=KODIAK_180B,local
+sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK2TB /home/KODIAK/PLEX2TB -oauto_cache,reconnect,volname=KODIAK_2TB,local
+sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK4TB1 /home/KODIAK/PLEX4TB1 -oauto_cache,reconnect,volname=KODIAK_4TB1,local
+sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK4TB2 /home/KODIAK/PLEX4TB2 -oauto_cache,reconnect,volname=KODIAK_4TB2,local
+sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK180GB1 /home/KODIAK/180SSD1 -oauto_cache,reconnect,volname=KODIAK_180A,local
+sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK180GB2 /home/KODIAK/180SSD2 -oauto_cache,reconnect,volname=KODIAK_180B,local
