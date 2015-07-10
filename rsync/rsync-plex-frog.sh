@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # rsync PLEX: KODIAK to FROG (TEST STRINGS)
 # ------------------------------------------------------------------
