@@ -11,6 +11,9 @@
 #
 # $LDRIVE (and all file paths) are relative to a specific box. Edit
 # the script to reflect your environment.
+#
+# This script assumes you have ssh shared keys set up between the 
+# two machines. This allows connections without password authentication.
 
 # RUNNING THE SCRIPT
 # ------------------------------------------------------------------
