@@ -4,6 +4,10 @@
 
 history | cut -c 8-               #history without line numbers
 
+
+find . "-name" ".DS_Store" -exec rm {} \;	# recursive file delete
+
+
 # X11
 # ---------------------------------------------
 
