@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # rsync PLEX: KODIAK to FROG (TEST STRINGS)
 # ------------------------------------------------------------------
 # rsync -avzn -e "ssh -i /home/bayaz/cron/frog-rsync-key" bayaz@KODIAK:/VOLUMES/KODIAK4TB1/PLEX_MOVIES/ /VOLUMES/FROG4TB/PLEX/MOVIES/
