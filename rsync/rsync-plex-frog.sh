@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # rsync PLEX: KODIAK to FROG (TEST STRINGS)
 # ------------------------------------------------------------------
 # rsync -avzn -e "ssh -i /home/bayaz/cron/frog-rsync-key" bayaz@KODIAK:/VOLUMES/KODIAK4TB1/PLEX_MOVIES/ /VOLUMES/FROG4TB/PLEX/MOVIES/
@@ -34,5 +36,6 @@ LOCALPATH=(
 
 for index in ${!REMOTEPATH[*]}
 do
-	echo $RSYNC -avn -e "$SSH -i $KEY" $RUSER@$RHOST:$REMOTEPATH[$index] $LOCALPATH[$index] 
+	echo $RSYNC -avn -e "$SSH -i $KEY" $RUSER@$RHOST:${$REMOTEPATH[$index]} ${$LOCALPATH[$index]}
+ 
 done
