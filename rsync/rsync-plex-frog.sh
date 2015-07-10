@@ -24,9 +24,9 @@
 
 # SET BASE VARIABLES
 # ------------------------------------------------------------------
-RUSER=$rsync-key[1]
-RHOST=$rsync-key[2]
-LDRIVE=echo ${rsync-key[3]^^}4TB
+RUSER=$1
+RHOST=$2
+LDRIVE='echo ${3^^}'
 
 RSYNC=/usr/bin/rsync 
 SSH=/usr/bin/ssh 
