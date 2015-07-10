@@ -32,5 +32,5 @@ LOCALPATH[3]/VOLUMES/FROG4TB/PLEX/AUDIO
 
 for index in ${!REMOTEPATH[*]}
 do
-	$RSYNC -avn -e "$SSH -i $KEY" $RUSER@$RHOST:$REMOTEPATH[$index] $LOCALPATH[$index] 
+	echo $RSYNC -avn -e "$SSH -i $KEY" $RUSER@$RHOST:$REMOTEPATH[$index] $LOCALPATH[$index] 
 done
