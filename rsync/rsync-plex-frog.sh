@@ -5,6 +5,9 @@
 # 
 # This script is used to sync/backup media directories from a central 
 # PLEX server. Run via crontab once a day, in the early AM hours.
+#
+# Run the script from the PLEX sattelite (LOCAL), which pulls from 
+# the central PLEX server (REMOTE).  Pass variables accordingly.
 
 
 # RUNNING THE SCRIPT
@@ -12,21 +15,23 @@
 
 # From the BASH shell
 
-# bash rsync-plex.sh sync-key RUSER RHOST RVOLUME
+# bash rsync-plex.sh sync-key REMOTEUSER REMOTEHOST LOCALHOST
 
 # From Cron
 
-# 0 0 * * * rsync-plex.sh rsync-key RUSER RHOST RVOLUME
+# 0 0 * * * rsync-plex.sh rsync-key REMOTEUSER REMOTEHOST LOCALHOST
 
 
 # SET BASE VARIABLES
 # ------------------------------------------------------------------
+RUSER=$rsync-key[1]
+RHOST=$rsync-key[2]
+LDRIVE=echo ${rsync-key[3]^^}4TB
+
 RSYNC=/usr/bin/rsync 
 SSH=/usr/bin/ssh 
-KEY=/home/bayaz/cron/frog-rsync-key
-RUSER=rsync-key[1]
-RHOST=rsync-key[2]
-RPATH=/VOLUMES/rsync-key[3]/PLEX
+KEY=/home/${RUSER}/cron/${REMOTE}-rsync-key
+LPATH=/VOLUMES/${LDRIVE}/PLEX
 
 REMOTEPATH=(
 	[0]=/VOLUMES/KODIAK4TB1/PLEX_MOVIES
@@ -36,10 +41,10 @@ REMOTEPATH=(
 )
 
 LOCALPATH=(
-	[0]=$RPATH/MOVIES
-	[1]=$RPATH/TV_SHOWS
-	[2]=$RPATH/MUSIC
-	[3]=$RPATH/AUDIO
+	[0]=$LPATH/MOVIES
+	[1]=$LPATH/TV_SHOWS
+	[2]=$LPATH/MUSIC
+	[3]=$LPATH/AUDIO
 )
 
 # LOOP THROUGH DIRS TO EXECUTE RSYNC
