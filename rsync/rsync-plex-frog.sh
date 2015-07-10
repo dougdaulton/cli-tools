@@ -36,6 +36,7 @@ LOCALPATH=(
 
 for index in ${!REMOTEPATH[*]}
 do
-	echo $RSYNC -avn -e "$SSH -i $KEY" $RUSER@$RHOST:${$REMOTEPATH[$index]} ${$LOCALPATH[$index]}
+	LOCALPATH2=${$LOCALPATH[$index]}
+	echo $RSYNC -avn -e "$SSH -i $KEY" $RUSER@$RHOST:${$REMOTEPATH[$index]} $LOCALPATH2
  
 done
