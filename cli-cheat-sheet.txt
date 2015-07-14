@@ -98,7 +98,6 @@ sshfs -o IdentityFile=~/.ssh/id_rsa ddaulton@tiger:/VOLUMES/TIGER4TB /Users/doug
 # Mount Remote Drives on EAGLE
 # ------------------------------------
 sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KMGN801/ /home/KODIAK/DROBO5N/ -oauto_cache,reconnect,volname=KODIAK_5N,local
-sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK180GB2 /home/KODIAK/180SSD2 -oauto_cache,reconnect,volname=KODIAK_180B,local
 sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK2TB /home/KODIAK/PLEX2TB -oauto_cache,reconnect,volname=KODIAK_2TB,local
 sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK4TB1 /home/KODIAK/PLEX4TB1 -oauto_cache,reconnect,volname=KODIAK_4TB1,local
 sshfs -o IdentityFile=~/.ssh/myserver_id_rsa ddaulton@box.geeq.me:/VOLUMES/KODIAK4TB2 /home/KODIAK/PLEX4TB2 -oauto_cache,reconnect,volname=KODIAK_4TB2,local
