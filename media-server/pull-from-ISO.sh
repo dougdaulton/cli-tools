@@ -108,10 +108,3 @@ shopt -s extglob
 # sudo rm -rf /media/tmpISO								# Remove Temporary ISO Mount Point
 
 IFS=$SAVEIFS											# Used for filenames with spaces
-
-
-#
-
-	
-#	ISOPATHS=${find ${SOURCEDIR}/**/*.iso -type f}
-#	ISONAMES=$(ls -R $SOURCEDIR | fgrep ".iso")
