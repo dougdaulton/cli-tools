@@ -1,6 +1,7 @@
 #! /bin/bash
 
 shopt -s nullglob
+shopt -s extglob
 
 # -----------------------------------------------------
 # Pull FIles From ISO
@@ -14,7 +15,6 @@ shopt -s nullglob
 # Establish Variables
 # -----------------------------------------------------
 	SOURCEDIR="$(dirname "$1")"
-	WRITEDIR=$2
 	
 	SAVEIFS=$IFS										# Used for filenames with spaces
 	IFS=$(echo -en "\n\b")								# Used for filenames with spaces
@@ -26,8 +26,8 @@ shopt -s nullglob
 # sudo mkdir /media/tmpISO								# Temporary ISO Mount Point
 
 
-echo sudo mkdir $WRITEDIR"/"00_REENCODE
-echo sudo mkdir $WRITEDIR"/"01_TO_FILE
+#	sudo mkdir $WRITEDIR"/"00_REENCODE
+#	sudo mkdir $WRITEDIR"/"01_TO_FILE
 
 # Read the Directory
 # -----------------------------------------------------
@@ -40,20 +40,58 @@ echo sudo mkdir $WRITEDIR"/"01_TO_FILE
 	do
 		ISOFOLDER=${isofile##*/}						# Strip leading DIRS off of ISO NAME
 		ISOFOLDER=${ISOFOLDER%.*}						# Strip .iso off ISO name to create folder name
-		echo mkdir $WRITEDIR"/"$ISOFOLDER
 
 		sudo mount -o loop $isofile /media/tmpISO		# Mount ISO to filesystem
-#		ls -l /media/tmpISO								# Read ISO Contents into array
 		
-		ISOCONTENTS=$(find /media/tmpISO -type f)
+		# Load Directory into Array
 		
-		for mediafile in $ISOCONTENTS
+		ISOCONTENTS=$(find /media/tmpISO -type f)		# Read ISO Contents into array
+		
+#		echo -e "\n"$ISOCONTENTS
+#		echo -e "\nBREAK\n"
+		
+		i=0;
+		for f in $ISOCONTENTS; 
 		do
-			mediaext=${mediafile##*.}
-			echo $mediaext
+			mediafiles[$i]="$f"
+			((i++))
 		done
 
+		echo -e "\nMEDIA PATH:"$mediafiles""
+	
+		mediatype=${mediafiles##*.}			
+#		mediatype="avi"
+		
+		echo -e "MEDIA TYPE:" $mediatype"\n"
+						
+		if [ $mediatype == "flv" ]
+			then
+				WRITESUBDIR="00_REENCODE"
+									
+		elif [ $mediatype == "avi" ]
+			then
+				WRITESUBDIR="00_REENCODE"
+					
+		else 
+			WRITESUBDIR="01_TO_FILE"		
+		fi	
+
+		WRITEDIR=$2"/"$WRITESUBDIR"/"$ISOFOLDER
+		
+		#ls -lah /media/tmpISO/!(*.nfo)
+	
+		mkdir $WRITEDIR
+
+		cp -rv /media/tmpISO/*!(*.nfo) $WRITEDIR
+
 		sudo umount /media/tmpISO 						# Unmount ISO from filesystem
+		
+		echo rm -rf $WRITEDIR/*nfo
+		
+#		unset $WRITEDIR
+		
+		sleep 5
+		
 	done
 
 
@@ -70,12 +108,6 @@ echo sudo mkdir $WRITEDIR"/"01_TO_FILE
 # sudo rm -rf /media/tmpISO								# Remove Temporary ISO Mount Point
 
 IFS=$SAVEIFS											# Used for filenames with spaces
-
-#SOURCEDIR-NULL
-#WRITEDIR=NULL
-#ISOPATHS=NULL
-#ISOOLDER=NULL
-#ISOCONTENTS=NULL
 
 
 #
