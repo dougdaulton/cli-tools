@@ -17,7 +17,7 @@ WRITEDIR=$2
 # Read the Directory
 # -----------------------------------------------------
 
-arr=(~/myDir/*)
+arr=(~/$SOURCEDIR/*)
 
 # iterate through array using a counter
 for ((i=0; i<${#arr[@]}; i++)); do
