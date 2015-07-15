@@ -1,0 +1,71 @@
+# Begin /etc/bashrc
+# ----------------------------------------------
+# System wide aliases and functions.
+# ----------------------------------------------
+
+# Change Prompt
+# ------------------------------------------------------------
+  export PS1="________________________________________________________________________________\n| \[\033[1;92m\]\u\[\033[0;97m\]:\[\033[0;93m\]\h:\[\033[0;96m\]\w \[\033[0;97m\]\n| => "
+  export PS2="| => "
+
+
+# Set Default Editor
+# ------------------------------------------------------------
+  export EDITOR=/usr/bin/nano
+
+# Initialize Bash Tab Completion
+# ------------------------------------------------------------
+  if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+
+# ------------------------------------------------------------
+# Add color to terminal
+# ------------------------------------------------------------
+# export CLICOLOR=1
+# export LSCOLORS=ExFxBxDxCxegedabagacad
+
+  export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32' 
+  export CLICOLOR=1
+  export LSCOLORS=ExFxCxDxBxegedabagacad
+
+
+# ------------------------------------------------------------
+# ALIASES
+# ------------------------------------------------------------
+
+# Aliases (KMG Scripts)
+# ------------------------------------------------------------
+  alias plexsync="rsync -av /VOLUMES/KMGN801/PLEX/Movies/ /VOLUMES/KODIAK4TB1/PLEX_MOVIES/"
+  alias plexsync-t="rsync -avn /VOLUMES/KMGN801/PLEX/Movies/ /VOLUMES/KODIAK4TB1/PLEX_MOVIES/"
+
+  alias ISOpull='bash /home/bayaz/scripts/media-server/pull-from-ISO.sh'
+
+# Aliases (Generic)
+# ------------------------------------------------------------
+  alias cp='cp -iv'                           # Preferred 'cp' implementation
+  alias mv='mv -iv'                           # Preferred 'mv' implementation
+  alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+  alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
+  alias less='less -FSRXc'                    # Preferred 'less' implementation
+  cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+  alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
+  alias ..='cd ../'                           # Go back 1 directory level
+  alias ...='cd ../../'                       # Go back 2 directory levels
+  alias .3='cd ../../../'                     # Go back 3 directory levels
+  alias .4='cd ../../../../'                  # Go back 4 directory levels
+  alias .5='cd ../../../../../'               # Go back 5 directory levels
+  alias .6='cd ../../../../../../'            # Go back 6 directory levels
+  alias edit='subl'                           # edit:         Opens any file in sublime editor
+  alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
+  alias ~="cd ~"                              # ~:            Go Home
+  alias c='clear'                             # c:            Clear terminal display
+  alias which='type -all'                     # which:        Find executables
+  alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
+
+# Alias (Full Recursive Directory Listing)
+# ------------------------------------------------------------
+  alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
+
+# ----------------------------------------------
+# End /etc/bashrc
