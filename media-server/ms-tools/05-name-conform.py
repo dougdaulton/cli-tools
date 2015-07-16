@@ -26,16 +26,13 @@
 # Configure environment
 # --------------------------------------------------------
 
-# Load Libraries
-# -----------------------
 import sys 
-import glob 
 import os 
-import sh
+import shutil
 from optparse import OptionParser
 
 # Set sourcedir
-# -----------------------
+# --------------------------------------------------------
 parser = OptionParser()
 parser.add_option("-d", dest="dir")
 
@@ -49,72 +46,76 @@ else:
     sourcedir = options.dir
 
 
-# name_conform () 			# Master Function
+# Cruft Removal Definitions & Functions  
 # --------------------------------------------------------
+remove_chars = [["#", ""],["%", ""],[":", ""],["(", ""],[")", ""], ["{", ""], ["}", ""], ["[", ""], ["]", ""]]
+remove_words = [["YIFY", ""],["ETRG", ""],["Dsl", ""]]
 
-# files_load () 			# Load Files from Dir 
-# --------------------------------------------------------
-
-# conform_nameext () 		# Conform File Name & Ext
-# --------------------------------------------------------
-
-def rename(dir, pattern, titlePattern):
-    for pathAndFilename in glob.iglob(os.path.join(dir, pattern)):
-        title, ext = os.path.splitext(os.path.basename(pathAndFilename))
-        os.rename(pathAndFilename, 
-                  os.path.join(dir, titlePattern % title + ext))
-                  
-                  
-                  
-import shutil
-
-def remove_char(name):
+def remove_char(fname):
     for item in remove_chars:
-        name = name.replace(item[0], item[1])
-    return name   
+        fname = fname.replace(item[0], item[1])
+    return fname   
 
-def remove_word(name):
+def remove_word(fname):
     for item in remove_words:
-        name = name.replace(item[0], item[1])
-    return name   
+        fname = fname.replace(item[0], item[1])
+    return fname   
     
-def replace_space(name):
+
+# Standardization Definitions & Functions  
+# --------------------------------------------------------
+
+replace_spaces = [[" ", "_"], [".", "_"], ["-", "_"],["__", "_"],["___", "_"]]
+replace_words = [["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"]]
+
+def replace_space(fname):
     for item in replace_spaces:
-        name = name.replace(item[0], item[1])
-    return name 
+        fname = fname.replace(item[0], item[1])
+    return fname 
     
-def replace_word(name):
+def replace_word(fname):
     for item in replace_words:
-        name = name.replace(item[0], item[1])
-    return name     
+        fname = fname.replace(item[0], item[1])
+    return fname     
 
-# Remove Trailing Underscore (tus)   
-def remove_tus(name):
-    if name.endswith("_"):
-        name = "ball"
-#       name = name[:-1]
-#    else:
-#        name = name
-	return name 
 
-for dirpath, dirs, files in os.walk(sourcedir):
-    for f in files:
-		fname, fext = os.path.splitext(f)
-		name = remove_char(fname)
-		name = remove_word(name)
-		name = replace_space(name)
-		name = replace_word(name)
-		name = remove_tus(name)
+# --------------------------------------------------------
+# Execute Standards Rename: FILENAMES
+# --------------------------------------------------------
 
-#		name = name.title()+fext.lower()
+for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
+    for f in files:												
+		fname, fext = os.path.splitext(f)					# Split files into basename & ext
+		fname = remove_char(fname)							# Remove unwanted characters
+		fname = remove_word(fname)							# Remove unwanted words
+		fname = replace_space(fname)						# Standardize spaces & space markers 
+		fname = replace_word(fname)							# Standardize filename elements
+		fname = fname.rstrip('_')							# Remove trailing underscore(s)
+
+		fname = fname.title()+fext.lower()					# Assemble filename and apply case conversions
 		
-		print ("FN: "+name+" EXT: "+fext)
+		shutil.move(dirpath+"/"+f, dirpath+"/"+fname)		# Rename files
+		print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+fname)	# Display changed filenames
 
-# conform_killcruft () 		# Remove Cruft
+
+# --------------------------------------------------------
+# Execute Standards Rename: DIRECTORIES
 # --------------------------------------------------------
 
-# conform_stanrdize () 		# Final Standardization
+for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
+    for d in dirs:	
+   													
+		dname = remove_char(d)								# Remove unwanted characters
+		dname = remove_word(dname)							# Remove unwanted words
+		dname = replace_space(dname)						# Standardize spaces & space markers 
+		dname = replace_word(dname)							# Standardize filename elements
+		dname = dname.rstrip('_')							# Remove trailing underscore(s)
+		
+   		dname = dname.title()								# Reset Directory Name to Title Case
+		
+		shutil.move(dirpath+"/"+d, dirpath+"/"+dname)		# Rename directories
+		print ("mv "+dirpath+"/"+d+" "+dirpath+"/"+dname)	# Display changed directories
+		
 # --------------------------------------------------------
-
-# write_log () 				# Write List To DB
+# EOF
 # --------------------------------------------------------

@@ -3,9 +3,8 @@
 # Load Libraries
 # -----------------------
 import sys 
-import glob 
 import os 
-import sh
+import shutil
 from optparse import OptionParser
 
 # some test code
@@ -13,6 +12,8 @@ from optparse import OptionParser
 
 print "##########################################"
     
+# Set sourcedir
+# --------------------------------------------------------
 parser = OptionParser()
 parser.add_option("-d", dest="dir")
 
@@ -25,27 +26,11 @@ if options.dir == None:
 else:
     sourcedir = options.dir
 
-# print sourcedir
-""""
-print "##########################################"
 
-for dirpath, dirs, files in os.walk(sourcedir):
-    print('DIR = %s' % dirpath)
-    for f in files:
-        print('\t%s' % f)
-        
-print "##########################################"     
-"""    
-
-# Define Substitutions    
+# Cruft Removal Definitions & Functions  
+# --------------------------------------------------------
 remove_chars = [["#", ""],["%", ""],[":", ""],["(", ""],[")", ""], ["{", ""], ["}", ""], ["[", ""], ["]", ""]]
-remove_words = [["YIFY", ""],["ETRG", ""],["Dsl", ""]]
-
-replace_spaces = [[" ", "_"], [".", "_"], ["-", "_"],["__", "_"],["___", "_"]]
-replace_words = [["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"]]
-
-
-# Execute Substitutions
+remove_words = [["YIFY", ""],["ETRG", ""]]
 
 def remove_char(fname):
     for item in remove_chars:
@@ -57,6 +42,13 @@ def remove_word(fname):
         fname = fname.replace(item[0], item[1])
     return fname   
     
+
+# Standardization Definitions & Functions  
+# --------------------------------------------------------
+
+replace_spaces = [[" ", "_"], [".", "_"], ["-", "_"],["__", "_"],["___", "_"]]
+replace_words = [["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"]]
+
 def replace_space(fname):
     for item in replace_spaces:
         fname = fname.replace(item[0], item[1])
@@ -67,57 +59,44 @@ def replace_word(fname):
         fname = fname.replace(item[0], item[1])
     return fname     
 
-for dirpath, dirs, files in os.walk(sourcedir):
-    for f in files:
-		fname, fext = os.path.splitext(f)
-		fname = remove_char(fname)
-		fname = remove_word(fname)
-		fname = replace_space(fname)
-		fname = replace_word(fname)
-		fname = fname.rstrip('_')
 
-		name = fname.title()+fext.lower()
-		
-#		print ("FN: "+fname+" EXT: "+fext)
-		print ("mv "+f+" --> "+name)
-		
+# --------------------------------------------------------
+# Execute Standards Rename: FILENAMES
+# --------------------------------------------------------
 
-#       shutil.move(dirpath+"/"+f, dirpath+"/"+name)
-#		print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+name)
+for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
+    for f in files:												
+		fname, fext = os.path.splitext(f)					# Split files into basename & ext
+		fname = remove_char(fname)							# Remove unwanted characters
+		fname = remove_word(fname)							# Remove unwanted words
+		fname = replace_space(fname)						# Standardize spaces & space markers 
+		fname = replace_word(fname)							# Standardize filename elements
+		fname = fname.rstrip('_')							# Remove trailing underscore(s)
+
+		fname = fname.title()+fext.lower()					# Assemble filename and apply case conversions
+		
+		shutil.move(dirpath+"/"+f, dirpath+"/"+fname)		# Rename files
+		print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+fname)	# Display changed filenames
+
+
+# --------------------------------------------------------
+# Execute Standards Rename: DIRECTORIES
+# --------------------------------------------------------
+
+for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
+    for d in dirs:	
+   													
+		dname = remove_char(d)								# Remove unwanted characters
+		dname = remove_word(dname)							# Remove unwanted words
+		dname = replace_space(dname)						# Standardize spaces & space markers 
+		dname = replace_word(dname)							# Standardize filename elements
+		dname = dname.rstrip('_')							# Remove trailing underscore(s)
+		
+   		dname = dname.title()								# Reset Directory Name to Title Case
+		
+		shutil.move(dirpath+"/"+d, dirpath+"/"+dname)		# Rename directories
+		print ("mv "+dirpath+"/"+d+" "+dirpath+"/"+dname)	# Display changed directories
+
+
 	
-
 print "##########################################"
-
-""""
-def unix_find(pathin):
-    # Return results similar to the Unix find command run without options
-    # i.e. traverse a directory tree and return all the file paths
-    return [os.path.join(path, file)
-            for (path, dirs, files) in os.walk(pathin)
-            for file in files]
-
-pathlist = unix_find(sourcedir)[:]
-
-from pprint import pprint
-pprint(pathlist)
-    
-    
-print "##########################################"
-
-print("Path at terminal when executing this file")
-print(os.getcwd() + "\n")
-
-print("This file path, relative to os.getcwd()")
-print(__file__ + "\n")
-
-print("This file full path (following symlinks)")
-full_path = os.path.realpath(__file__)
-print(full_path + "\n")
-
-print("This file directory and name")
-path, file = os.path.split(full_path)
-print(path + ' --> ' + file + "\n")
-
-print("This file directory only")
-print(os.path.dirname(full_path))
-"""    
