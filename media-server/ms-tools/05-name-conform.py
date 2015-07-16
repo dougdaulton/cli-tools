@@ -63,6 +63,52 @@ def rename(dir, pattern, titlePattern):
         title, ext = os.path.splitext(os.path.basename(pathAndFilename))
         os.rename(pathAndFilename, 
                   os.path.join(dir, titlePattern % title + ext))
+                  
+                  
+                  
+import shutil
+
+def remove_char(name):
+    for item in remove_chars:
+        name = name.replace(item[0], item[1])
+    return name   
+
+def remove_word(name):
+    for item in remove_words:
+        name = name.replace(item[0], item[1])
+    return name   
+    
+def replace_space(name):
+    for item in replace_spaces:
+        name = name.replace(item[0], item[1])
+    return name 
+    
+def replace_word(name):
+    for item in replace_words:
+        name = name.replace(item[0], item[1])
+    return name     
+
+# Remove Trailing Underscore (tus)   
+def remove_tus(name):
+    if name.endswith("_"):
+        name = "ball"
+#       name = name[:-1]
+#    else:
+#        name = name
+	return name 
+
+for dirpath, dirs, files in os.walk(sourcedir):
+    for f in files:
+		fname, fext = os.path.splitext(f)
+		name = remove_char(fname)
+		name = remove_word(name)
+		name = replace_space(name)
+		name = replace_word(name)
+		name = remove_tus(name)
+
+#		name = name.title()+fext.lower()
+		
+		print ("FN: "+name+" EXT: "+fext)
 
 # conform_killcruft () 		# Remove Cruft
 # --------------------------------------------------------
