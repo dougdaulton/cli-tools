@@ -51,7 +51,7 @@ replace_spaces = [[" ", "_"], [".", "_"], ["-", "_"],["__", "_"],["___", "_"]]
 
 replace_words = [["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"],["&", "And"], ["'S", "s"], ["`S", "s"]]
 
-replace_sources = [["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],["Kelbyone", "KT"],["Kelby_Training", "KT"],["Kt", "KT"],["Lynda", "LDC"],["Ldc", "LDC"],["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Amherst_Media", "AM"],["Am", "AM"],["Digital_Photographer", "DP"],["Dp", "DP"],["Hdr", "HDR"],["__", "_"],["Cc", "CC"],["EPubs", "ePubs"],["Nra", "NRA"]]
+replace_sources = [["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],["Kelbyone", "KT"],["Kelby_Training", "KT"],["Kt", "KT"],["Lynda", "LDC"],["Ldc", "LDC"],["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Amherst_Media", "AM"],["Dslr", "DSLR"],["Digital_Photographer", "DP"],["Dp", "DP"],["Hdr", "HDR"],["__", "_"],["Cc", "CC"],["EPubs", "ePubs"],["Nra", "NRA"]]
 
 def replace_space(fname):
     for item in replace_spaces:
@@ -75,16 +75,16 @@ def replace_source(fname):
 
 for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
     for f in files:												
-		fname, fext = os.path.splitext(f)					# Split files into basename & ext
-		fname = remove_word(fname)							# Remove unwanted words
-		fname = remove_char(fname)							# Remove unwanted characters
-		fname = replace_space(fname)						# Standardize spaces & space markers 
-		fname = replace_word(fname)							# Standardize filename elements
-		fname = fname.rstrip('_')							# Remove trailing underscore(s)
+		fname, fext = os.path.splitext(f)			# Split files into basename & ext
+		fname = remove_word(fname)				# Remove unwanted words
+		fname = remove_char(fname)				# Remove unwanted characters
+		fname = replace_space(fname)				# Standardize spaces & space markers 
+		fname = replace_word(fname)				# Standardize filename elements
+		fname = fname.rstrip('_')				# Remove trailing underscore(s)
 
-		fname = fname.title()+fext.lower()					# Assemble filename and apply case conversions
+		fname = fname.title()+fext.lower()			# Assemble filename and apply case conversions
 		
-		fname = replace_source(fname)						# Standardize Source Prefixes
+		fname = replace_source(fname)				# Standardize Source Prefixes
 		
 		shutil.move(dirpath+"/"+f, dirpath+"/"+fname)		# Rename files
 		print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+fname)	# Display changed filenames
@@ -96,15 +96,15 @@ for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
 
 for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
     for d in dirs:	
-   		dname = remove_word(d)								# Remove unwanted words												
-		dname = remove_char(dname)							# Remove unwanted characters
-		dname = replace_space(dname)						# Standardize spaces & space markers 
-		dname = replace_word(dname)							# Standardize filename elements
-		dname = dname.rstrip('_')							# Remove trailing underscore(s)
+   		dname = remove_word(d)					# Remove unwanted words												
+		dname = remove_char(dname)				# Remove unwanted characters
+		dname = replace_space(dname)				# Standardize spaces & space markers 
+		dname = replace_word(dname)				# Standardize filename elements
+		dname = dname.rstrip('_')				# Remove trailing underscore(s)
 		
-   		dname = dname.title()								# Reset Directory Name to Title Case
+   		dname = dname.title()					# Reset Directory Name to Title Case
 		
-		dname = replace_source(dname)						# Standardize Source Prefixes
+		dname = replace_source(dname)				# Standardize Source Prefixes
 
 		
 		shutil.move(dirpath+"/"+d, dirpath+"/"+dname)		# Rename directories
