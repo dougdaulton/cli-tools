@@ -47,54 +47,43 @@ replace_words = [["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", 
 
 # Execute Substitutions
 
-def remove_char(name):
+def remove_char(fname):
     for item in remove_chars:
-        name = name.replace(item[0], item[1])
-    return name   
+        fname = fname.replace(item[0], item[1])
+    return fname   
 
-def remove_word(name):
+def remove_word(fname):
     for item in remove_words:
-        name = name.replace(item[0], item[1])
-    return name   
+        fname = fname.replace(item[0], item[1])
+    return fname   
     
-def replace_space(name):
+def replace_space(fname):
     for item in replace_spaces:
-        name = name.replace(item[0], item[1])
-    return name 
+        fname = fname.replace(item[0], item[1])
+    return fname 
     
-def replace_word(name):
+def replace_word(fname):
     for item in replace_words:
-        name = name.replace(item[0], item[1])
-    return name     
-
-# Remove Trailing Underscore (tus)   
-def remove_tus(name):
-    if name.endswith("_"):
-        name = name[:-1]
-    else:
-        name = name	
-	return name 
+        fname = fname.replace(item[0], item[1])
+    return fname     
 
 for dirpath, dirs, files in os.walk(sourcedir):
     for f in files:
 		fname, fext = os.path.splitext(f)
-		name = remove_char(fname)
-		name = remove_word(name)
-		name = replace_space(name)
-		name = replace_word(name)
-		name = remove_tus(name)
-		name = name.title()+fext.lower()
+		fname = remove_char(fname)
+		fname = remove_word(fname)
+		fname = replace_space(fname)
+		fname = replace_word(fname)
+		fname = fname.rstrip('_')
+
+		name = fname.title()+fext.lower()
 		
+#		print ("FN: "+fname+" EXT: "+fext)
 		print ("mv "+f+" --> "+name)
-#        split = f.rfind(".")
-#        if split not in (0, -1):
-#            name = ("").join((f[:split].title(), f[split:].lower()))
-#        else:
-#            name = f.title()
 		
 
 #       shutil.move(dirpath+"/"+f, dirpath+"/"+name)
-#	print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+name)
+#		print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+name)
 	
 
 print "##########################################"
