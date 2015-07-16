@@ -7,7 +7,7 @@
 #		Title Case
 #		Only Letters, Numbers & Underscores
 #  
-#   2. File Extension
+#   	2. File Extension
 #		Lower Case
 #	
 #  	3. Remove cruft from filename
@@ -85,14 +85,14 @@ def replace_word(fname):
 
 for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
     for f in files:												
-		fname, fext = os.path.splitext(f)					# Split files into basename & ext
-		fname = remove_char(fname)							# Remove unwanted characters
-		fname = remove_word(fname)							# Remove unwanted words
-		fname = replace_space(fname)						# Standardize spaces & space markers 
-		fname = replace_word(fname)							# Standardize filename elements
-		fname = fname.rstrip('_')							# Remove trailing underscore(s)
+		fname, fext = os.path.splitext(f)			# Split files into basename & ext
+		fname = remove_char(fname)				# Remove unwanted characters
+		fname = remove_word(fname)				# Remove unwanted words
+		fname = replace_space(fname)				# Standardize spaces & space markers 
+		fname = replace_word(fname)				# Standardize filename elements
+		fname = fname.rstrip('_')				# Remove trailing underscore(s)
 
-		fname = fname.title()+fext.lower()					# Assemble filename and apply case conversions
+		fname = fname.title()+fext.lower()			# Reassemble file & apply case conversions
 		
 		shutil.move(dirpath+"/"+f, dirpath+"/"+fname)		# Rename files
 		print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+fname)	# Display changed filenames
@@ -103,15 +103,14 @@ for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
 # --------------------------------------------------------
 
 for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
-    for d in dirs:	
-   													
-		dname = remove_char(d)								# Remove unwanted characters
-		dname = remove_word(dname)							# Remove unwanted words
-		dname = replace_space(dname)						# Standardize spaces & space markers 
-		dname = replace_word(dname)							# Standardize filename elements
-		dname = dname.rstrip('_')							# Remove trailing underscore(s)
+    for d in dirs:	   													
+		dname = remove_char(d)					# Remove unwanted characters
+		dname = remove_word(dname)				# Remove unwanted words
+		dname = replace_space(dname)				# Standardize spaces & space markers 
+		dname = replace_word(dname)				# Standardize filename elements
+		dname = dname.rstrip('_')				# Remove trailing underscore(s)
 		
-   		dname = dname.title()								# Reset Directory Name to Title Case
+   		dname = dname.title()					# Reset Directory Name to Title Case
 		
 		shutil.move(dirpath+"/"+d, dirpath+"/"+dname)		# Rename directories
 		print ("mv "+dirpath+"/"+d+" "+dirpath+"/"+dname)	# Display changed directories
