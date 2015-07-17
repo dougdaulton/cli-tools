@@ -112,6 +112,10 @@ def find_move_reencode (dirpath, dirs, files)
 
 for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Directory
     
+    print dirpath
+    print dirs
+    print files
+
     find_move_iso (dirpath, dirs, files)
     iso_dirs = set(iso_dirs)
     
