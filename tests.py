@@ -71,6 +71,7 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
         if any(fext in x for x in files_reencodes):             # FIND & MOVE Reencodes
             targetpath = dir_reencodes                          # Set target directory
 
+            print dir[f]
             print ("mv "+dirpath+"/"+f+" "+targetpath+"/"+f)    # Move File (Display)
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
