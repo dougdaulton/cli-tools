@@ -118,7 +118,7 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 #    print dirs
 #    print files
 
-    find_move_iso (dirpath, dirs, files)
+    find_move_iso (dirpath, dirs, files, iso_dirs)
     iso_dirs = set(iso_dirs)
     
     print "\n # ------------------------------------"
@@ -126,14 +126,14 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
     print "# ------------------------------------\n"
 
 
-    find_move_tarball (dirpath, dirs, files)
+    find_move_tarball (dirpath, dirs, files, tarball_dirs)
     tarball_dirs = set(tarball_dirs)
     
     print "\n # ------------------------------------"
     print "# COMPLETED: TARBALL MOVES"
     print "# ------------------------------------\n"
 
-    find_move_reencode (dirpath, dirs, files)
+    find_move_reencode (dirpath, dirs, files, reencode_dirs)
     reencode_dirs = set(reencode_dirs)
 
 
