@@ -95,7 +95,7 @@ def replace_source(fname):
 # Execute Standards Rename: FILENAMES
 # --------------------------------------------------------
 
-    for dirpath, dirs, files in os.walk(sourcedir):             # Parse The Directory
+for dirpath, dirs, files in os.walk(sourcedir):                  # Parse The Directory
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
         fname = remove_word(fname)                              # Remove unwanted words
