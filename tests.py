@@ -48,20 +48,33 @@ exts_tarballs= [".tar",".TAR",".tgz",".TGZ",".zip",".ZIP"]     # File Extensions
 
 exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions (Reencodes)
 
-iso_dirs = []
+# iso_dirs = [ ]
 
-tarball_dirs = []
+# tarball_dirs = [ ]
 
-reencode_dirs = []
+# reencode_dirs = [ ]
 
 # --------------------------------------------------------
 # Set targetdirs & file extension lists
 # --------------------------------------------------------
 
-def find_move_iso (dirpath, dirs, files, iso_dirs):
+
+def parse_dir (source_dir):
+    directory_info = os.walk(sourcedir,, topdown=True):                 # Parse The Directory
     
-    for f in files:
-        fname, fext = os.path.splitext(f)                       # Split files into basename & ext
+    dirpath = directory_info[1]
+    dirnames = directory_info[2]
+    filenames = directory_info[3]
+    
+    return dirpath
+    return dirnames
+    return filenames
+
+
+def find_move_iso (dirpath, dirnames, filenames):
+    
+    for f in filenames:
+        fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
         
         if any(fext in x for x in exts_isos):                   # FIND & MOVE ISOS
             targetpath = target_isos                            # Set target directory
@@ -74,10 +87,10 @@ def find_move_iso (dirpath, dirs, files, iso_dirs):
         return iso_dirs
 
 
-def find_move_tarball (dirpath, dirs, files, tarball_dirs):
+def find_move_tarball (dirpath, dirnames, filenames):
 
-    for f in files:
-        fname, fext = os.path.splitext(f)                       # Split files into basename & ext
+    for f in filenames:
+        fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
         
         if any(fext in x for x in exts_tarballs):               # FIND & MOVE TARBALLS
             targetpath = target_tarballs                        # Set target directory
@@ -90,10 +103,10 @@ def find_move_tarball (dirpath, dirs, files, tarball_dirs):
         return tarball_dirs
 
 
-def find_move_reencode (dirpath, dirs, files, reencode_dirs):
+def find_move_reencode (dirpath, dirnames, filenames):
     
-    for f in files:
-        fname, fext = os.path.splitext(f)                       # Split files into basename & ext
+    for f in filenames:
+        fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
         
         if any(fext in x for x in exts_reencodes):              # FIND & MOVE Reencodes
             targetpath = target_reencodes                       # Set target directory
@@ -109,37 +122,40 @@ def find_move_reencode (dirpath, dirs, files, reencode_dirs):
 
 
 # --------------------------------------------------------
-# FIND & MOVE FILES
+# FIND & MOVE filenames
 # --------------------------------------------------------
 
-for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Directory
+parse_dir()
+
+print dirpath
+print dirs
+print filenames
+
+find_move_iso (dirpath, dirnames, filenames, iso_dirs)
+
+print find_move_iso()
+
+iso_dirs = set(iso_dirs)
     
-#    print dirpath
-#    print dirs
-#    print files
-
-    find_move_iso (dirpath, dirs, files, iso_dirs)
-    iso_dirs = set(iso_dirs)
-    
-    print "\n# ------------------------------------"
-    print "# COMPLETED: ISO MOVES"
-    print "# ------------------------------------\n"
+print "\n# ------------------------------------"
+print "# COMPLETED: ISO MOVES"
+print "# ------------------------------------\n"
 
 
-    find_move_tarball (dirpath, dirs, files, tarball_dirs)
-    tarball_dirs = set(tarball_dirs)
-    
-    print "\n# ------------------------------------"
-    print "# COMPLETED: TARBALL MOVES"
-    print "# ------------------------------------\n"
+find_move_tarball (dirpath, dirnames, filenames, tarball_dirs)
+tarball_dirs = set(tarball_dirs)
 
-    find_move_reencode (dirpath, dirs, files, reencode_dirs)
-    reencode_dirs = set(reencode_dirs)
+print "\n# ------------------------------------"
+print "# COMPLETED: TARBALL MOVES"
+print "# ------------------------------------\n"
+
+find_move_reencode (dirpath, dirnames, filenames, reencode_dirs)
+reencode_dirs = set(reencode_dirs)
 
 
-    print "\n# ------------------------------------"
-    print "# COMPLETED: REENCODE MOVES"
-    print "# ------------------------------------\n"
+print "\n# ------------------------------------"
+print "# COMPLETED: REENCODE MOVES"
+print "# ------------------------------------\n"
 
 
 # REMOVE EMPTY DIRECTORIES
