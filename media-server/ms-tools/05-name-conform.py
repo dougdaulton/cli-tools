@@ -50,7 +50,7 @@ else:
 # --------------------------------------------------------
 remove_words = [["YIFY", ""],["ETRG", ""],["[ www.Torrenting.com ] - ", ""], ["{AceMerlin}", ""]]
 
-remove_chars = [["#", ""],["%", ""],[":", ""],["'", ""],[",", ""],["(", ""],[")", ""], ["{", ""], ["}", ""], ["[", ""], ["]", ""]]
+remove_chars = [["#",""],["%", ""],[":", ""],["'", ""],[",", ""],["(", ""],[")", ""], ["{", ""], ["}", ""], ["[", ""], ["]", ""], ["!", ""]]
 
 def remove_char(fname):
     for item in remove_chars:
@@ -70,7 +70,7 @@ replace_spaces = [[" ", "_"], [".", "_"], ["-", "_"],["__", "_"],["___", "_"]]
 
 replace_words = [["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"],["&", "And"], ["'S", "s"], ["`S", "s"]]
 
-replace_sources = [["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],["Kelbyone", "KT"],["Kelby_Training", "KT"],["Kt", "KT"],["Lynda", "LDC"],["Ldc", "LDC"],["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Amherst_Media", "AM"],["Dslr", "DSLR"],["Digital_Photographer", "DP"],["Dp", "DP"],["Hdr", "HDR"],["__", "_"],["Cc", "CC"],["EPubs", "ePubs"],["Nra", "NRA"]]
+replace_sources = [["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],["Kelbyone", "KT"],["Kelby_Training", "KT"],["Kt", "KT"],["Lynda", "LDC"],["Ldc", "LDC"],["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Amherst_Media", "AM"],["Dslr", "DSLR"],["Digital_Photographer", "DP"],["Dp", "DP"],["Hdr", "HDR"],["__", "_"],["Cc", "CC"],["EPubs", "ePubs"],["Nra", "NRA"],["Gnomon", "GNOMON"],["Seo", "SEO"], ["Indesign", "InDesign"], ["Skillshare", "SS"], ["Ss", "SS"], ["Phlearn","PHLEARN"]]
 
 def replace_space(fname):
     for item in replace_spaces:
