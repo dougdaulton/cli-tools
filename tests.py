@@ -63,7 +63,6 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
             iso_dirs = iso_dirs.extend(dirpath) 
-            return iso_dirs
 
         elif any(fext in x for x in exts_tarballs):              # FIND & MOVE TARBALLS
             targetpath = target_tarballs                           # Set target directory
@@ -72,7 +71,6 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
             tarball_dirs = tarball_dirs.extend(dirpath) 
-            return tarball_dirs
 
         elif any(fext in x for x in exts_reencodes):             # FIND & MOVE Reencodes
             targetpath = target_reencodes                          # Set target directory
@@ -87,6 +85,8 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
             print "# NOTHING TO MOVE"
             print "# ------------------------------------"
 
+        return iso_dirs
+        return tarball_dirs
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
