@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 
+# --------------------------------------------------------
 # Load Libraries
-# -----------------------
+# --------------------------------------------------------
 import sys 
 import os 
 import shutil
 from optparse import OptionParser
 
-# some test code
-# -----------------------
 
 print "##########################################"
-    
+
+# --------------------------------------------------------
 # Set sourcedir
 # --------------------------------------------------------
 parser = OptionParser()
@@ -19,7 +19,6 @@ parser.add_option("-d", dest="dir")
 
 (options, args) = parser.parse_args()
 
-#try: options.dir
 
 if options.dir == None:
     sourcedir = os.getcwd()
@@ -27,6 +26,7 @@ else:
     sourcedir = options.dir
 
 
+# --------------------------------------------------------
 # Set targetdirs & file extension lists
 # --------------------------------------------------------
 
@@ -52,63 +52,99 @@ iso_dirs = [ ]
 
 tarball_dirs = [ ]
 
+reencode_dirs = [ ]
 
-# FIND & MOVE FILES
+
+# --------------------------------------------------------
+# Set targetdirs & file extension lists
 # --------------------------------------------------------
 
-for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Directory
+def find_move_iso (dirpath, dirs, files)
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
         
-        if any(fext in x for x in exts_isos):                  # FIND & MOVE ISOS
-            targetpath = target_isos                               # Set target directory
+        if any(fext in x for x in exts_isos):                   # FIND & MOVE ISOS
+            targetpath = target_isos                            # Set target directory
            
             print ("mv "+dirpath+"/"+f+" "+targetpath+"/"+f)    # Move File (Display)
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
             iso_dirs = iso_dirs.extend(dirpath) 
 
-            print "# ------------------------------------"
-            print "# COMPLETED: ISO MOVES"
-            print "# ------------------------------------"
+        return iso_dirs
 
 
-        elif any(fext in x for x in exts_tarballs):              # FIND & MOVE TARBALLS
-            targetpath = target_tarballs                           # Set target directory
+def find_move_tarball (dirpath, dirs, files)
+    for f in files:
+        fname, fext = os.path.splitext(f)                       # Split files into basename & ext
+        
+        if any(fext in x for x in exts_tarballs):               # FIND & MOVE TARBALLS
+            targetpath = target_tarballs                        # Set target directory
             
             print ("mv "+dirpath+"/"+f+" "+targetpath+"/"+f)    # Move File (Display)
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
             tarball_dirs = tarball_dirs.extend(dirpath) 
 
-            print "# ------------------------------------"
-            print "# COMPLETED: TARBALL MOVES"
-            print "# ------------------------------------"
+        return tarball_dirs
 
 
-        elif any(fext in x for x in exts_reencodes):             # FIND & MOVE Reencodes
-            targetpath = target_reencodes                          # Set target directory
+def find_move_reencode (dirpath, dirs, files)
+    for f in files:
+        fname, fext = os.path.splitext(f)                       # Split files into basename & ext
+        
+        if any(fext in x for x in exts_reencodes):              # FIND & MOVE Reencodes
+            targetpath = target_reencodes                       # Set target directory
 
 	     	
             dir2move = os.path.basename(dirpath)
-            print ("mv "+dirpath+" --> "+targetpath+"/")    # Move File (Display)
+            print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-            print "# ------------------------------------"
-            print "# COMPLETED: REENCODE MOVES"
-            print "# ------------------------------------"
+            iso_dirs = iso_dirs.extend(dirpath) 
 
-#        return iso_dirs
-#        return tarball_dirs
+        return reencode_dirs
+
+
+# --------------------------------------------------------
+# FIND & MOVE FILES
+# --------------------------------------------------------
+
+for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Directory
+    
+    find_move_iso (dirpath, dirs, files)
+    iso_dirs = set(iso_dirs)
+    
+    print "\n # ------------------------------------"
+    print "# COMPLETED: ISO MOVES"
+    print "# ------------------------------------\n"
+
+
+    find_move_tarball (dirpath, dirs, files)
+    tarball_dirs = set(tarball_dirs)
+    
+    print "\n # ------------------------------------"
+    print "# COMPLETED: TARBALL MOVES"
+    print "# ------------------------------------\n"
+
+    find_move_reencode (dirpath, dirs, files)
+    reencode_dirs = set(reencode_dirs)
+
+
+    print "\n # ------------------------------------"
+    print "# COMPLETED: REENCODE MOVES"
+    print "# ------------------------------------\n"
+
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
-iso_dirs = set(iso_dirs)
+
 print ("++++++++++\n"+iso_dirs+"++++++++++\n\n") 
 
 tarball_dirs = set(tarball_dirs)
 print ("++++++++++\n"+tarball_dirs+"++++++++++\n") 
+
+print "################ EOS ####################"
 # --------------------------------------------------------
 # EOF
 # --------------------------------------------------------	
-print "##########################################"
