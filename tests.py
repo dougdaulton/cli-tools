@@ -58,7 +58,7 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions
 # Set targetdirs & file extension lists
 # --------------------------------------------------------
 
-
+"""
 def parse_dir (source_dir):
     directory_info = os.walk(sourcedir,topdown=True)                # Parse The Directory
     
@@ -69,7 +69,7 @@ def parse_dir (source_dir):
     return dirpath
     return dirnames
     return filenames
-
+"""
 
 def find_move_iso (dirpath, dirnames, filenames):
     
@@ -125,11 +125,21 @@ def find_move_reencode (dirpath, dirnames, filenames):
 # FIND & MOVE filenames
 # --------------------------------------------------------
 
+for root_o, dir_o, files_o in os.walk(sourcedir,topdown=True):
+    print root_o
+    print "^-- dirpath \n\n"
+    print dir_o
+    print "^-- dirnames\n\n"
+    print files_o
+    print "^-- filenames"
+
+"""
 parse_dir(sourcedir)
 
 print dirpath
 print dirs
 print filenames
+"""
 
 find_move_iso (dirpath, dirnames, filenames, iso_dirs)
 
