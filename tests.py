@@ -103,7 +103,7 @@ def find_move_reencode (dirpath, dirs, files, reencode_dirs):
             print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-            reencode_dirs = reencode_dirs.extend(dirpath) 
+#            reencode_dirs = reencode_dirs.extend(dirpath) 
 
         return reencode_dirs
 
@@ -121,7 +121,7 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
     find_move_iso (dirpath, dirs, files, iso_dirs)
     iso_dirs = set(iso_dirs)
     
-    print "\n # ------------------------------------"
+    print "\n# ------------------------------------"
     print "# COMPLETED: ISO MOVES"
     print "# ------------------------------------\n"
 
@@ -129,7 +129,7 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
     find_move_tarball (dirpath, dirs, files, tarball_dirs)
     tarball_dirs = set(tarball_dirs)
     
-    print "\n # ------------------------------------"
+    print "\n# ------------------------------------"
     print "# COMPLETED: TARBALL MOVES"
     print "# ------------------------------------\n"
 
@@ -137,7 +137,7 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
     reencode_dirs = set(reencode_dirs)
 
 
-    print "\n # ------------------------------------"
+    print "\n# ------------------------------------"
     print "# COMPLETED: REENCODE MOVES"
     print "# ------------------------------------\n"
 
@@ -145,12 +145,16 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
 
-print ("++++++++++\n"+iso_dirs+"++++++++++\n\n") 
+print "\n# ------------------------------------"
+print iso_dirs 
+print "# ------------------------------------\n"
 
-tarball_dirs = set(tarball_dirs)
-print ("++++++++++\n"+tarball_dirs+"++++++++++\n") 
+print "\n# ------------------------------------"
+print tarball_dirs 
+print "# ------------------------------------\n\n"
 
 print "################ EOS ####################"
+
 # --------------------------------------------------------
 # EOF
 # --------------------------------------------------------	
