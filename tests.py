@@ -48,6 +48,10 @@ exts_tarballs= [".tar",".TAR",".tgz",".TGZ",".zip",".ZIP"]     # File Extensions
 
 exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions (Reencodes)
 
+iso_dirs = [ ]
+
+tarball_dirs = [ ]
+
 
 # FIND & MOVE FILES
 # --------------------------------------------------------
@@ -64,6 +68,11 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 
             iso_dirs = iso_dirs.extend(dirpath) 
 
+            print "# ------------------------------------"
+            print "# COMPLETED: ISO MOVES"
+            print "# ------------------------------------"
+
+
         elif any(fext in x for x in exts_tarballs):              # FIND & MOVE TARBALLS
             targetpath = target_tarballs                           # Set target directory
             
@@ -71,6 +80,11 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
             tarball_dirs = tarball_dirs.extend(dirpath) 
+
+            print "# ------------------------------------"
+            print "# COMPLETED: TARBALL MOVES"
+            print "# ------------------------------------"
+
 
         elif any(fext in x for x in exts_reencodes):             # FIND & MOVE Reencodes
             targetpath = target_reencodes                          # Set target directory
@@ -80,13 +94,12 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
             print ("mv "+dirpath+" --> "+targetpath+"/")    # Move File (Display)
 #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-        else:
             print "# ------------------------------------"
-            print "# NOTHING TO MOVE"
+            print "# COMPLETED: REENCODE MOVES"
             print "# ------------------------------------"
 
-        return iso_dirs
-        return tarball_dirs
+#        return iso_dirs
+#        return tarball_dirs
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
