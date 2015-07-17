@@ -27,89 +27,53 @@ else:
     sourcedir = options.dir
 
 
-# Cruft Removal Definitions & Functions  
-# --------------------------------------------------------
-remove_words = [["YIFY", ""],["ETRG", ""],["[ www.Torrenting.com ] - ", ""], ["{AceMerlin}", ""]]
-
-remove_chars = [["#", ""],["%", ""],[":", ""],["'", ""],[",", ""],["(", ""],[")", ""], ["{", ""], ["}", ""], ["[", ""], ["]", ""]]
-
-def remove_char(fname):
-    for item in remove_chars:
-        fname = fname.replace(item[0], item[1])
-    return fname   
-
-def remove_word(fname):
-    for item in remove_words:
-        fname = fname.replace(item[0], item[1])
-    return fname   
-    
-
-# Standardization Definitions & Functions  
+# Set targetdirs & file extension lists
 # --------------------------------------------------------
 
-replace_spaces = [[" ", "_"], [".", "_"], ["-", "_"],["__", "_"],["___", "_"]]
+dir_isos = "/go/PROCESS/00_ISOS/TEST"                                # Watch Folder:  ISOs
 
-replace_words = [["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"],["&", "And"], ["'S", "s"], ["`S", "s"]]
+dir_tarballs = "/go/PROCESS/01_TARBALLS/TEST"                        # Watch Folder: Tarballs
 
-replace_sources = [["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],["Kelbyone", "KT"],["Kelby_Training", "KT"],["Kt", "KT"],["Lynda", "LDC"],["Ldc", "LDC"],["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Amherst_Media", "AM"],["Dslr", "DSLR"],["Digital_Photographer", "DP"],["Dp", "DP"],["Hdr", "HDR"],["__", "_"],["Cc", "CC"],["EPubs", "ePubs"],["Nra", "NRA"]]
+dir_reencode = "/go/PROCESS/02_REENCODE/TEST"                        # Watch Folder: Reencodes
 
-def replace_space(fname):
-    for item in replace_spaces:
-        fname = fname.replace(item[0], item[1])
-    return fname 
-    
-def replace_word(fname):
-    for item in replace_words:
-        fname = fname.replace(item[0], item[1])
-    return fname    
-    
-def replace_source(fname):
-    for item in replace_sources:
-        fname = fname.replace(item[0], item[1])
-    return fname         
+#dir_isos = "/go/PROCESS/00_ISOS"                                # Watch Folder:  ISOs
+
+#dir_tarballs = "/go/PROCESS/01_TARBALLS"                        # Watch Folder: Tarballs
+
+#dir_reencode = "/go/PROCESS/02_REENCODE"                        # Watch Folder: Reencodes
+
+files_isos = [".iso",".ISO"]                                    # File Extensions (ISOs)
+
+files_tarballs= [".tar",".TAR",".tgz",".TGZ",".zip",".ZIP"]     # File Extensions (Tarballs)
+
+files_reencode = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]    # File Extensions (ReEncodes)
 
 
-# --------------------------------------------------------
-# Execute Standards Rename: FILENAMES
+# FIND & MOVE FILES
 # --------------------------------------------------------
 
-for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
-    for f in files:												
-		fname, fext = os.path.splitext(f)			# Split files into basename & ext
-		fname = remove_word(fname)				# Remove unwanted words
-		fname = remove_char(fname)				# Remove unwanted characters
-		fname = replace_space(fname)				# Standardize spaces & space markers 
-		fname = replace_word(fname)				# Standardize filename elements
-		fname = fname.rstrip('_')				# Remove trailing underscore(s)
+for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Directory
+    for f in files:
+        fname, fext = os.path.splitext(f)                       # Split files into basename & ext
+        
+        if any(fext in x for x in files_iso):                   # FIND & MOVE ISOS
+            targetdir = dir_isos                                # Set target directory
+            
+            print ("mv "+dirpath+"/"+f+" "+targetpath+"/"+f)    # Move File (Display)
+#           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-		fname = fname.title()+fext.lower()			# Assemble filename and apply case conversions
-		
-		fname = replace_source(fname)				# Standardize Source Prefixes
-		
-		shutil.move(dirpath+"/"+f, dirpath+"/"+fname)		# Rename files
-		print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+fname)	# Display changed filenames
+        if any(fext in x for x in files_tarballs):              # FIND & MOVE TARBALLS
+            targetdir = dir_tarballs                            # Set target directory
+            
+            print ("mv "+dirpath+"/"+f+" "+targetpath+"/"+f)    # Move File (Display)
+#           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
+        if any(fext in x for x in files_reencodes):             # FIND & MOVE Reencodes
+            targetdir = dir_reecode                             # Set target directory
 
-# --------------------------------------------------------
-# Execute Standards Rename: DIRECTORIES
-# --------------------------------------------------------
+            print ("mv "+dirpath+"/"+f+" "+targetpath+"/"+f)    # Move File (Display)
+#           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-for dirpath, dirs, files in os.walk(sourcedir):				# Parse The Directory
-    for d in dirs:	
-   		dname = remove_word(d)					# Remove unwanted words												
-		dname = remove_char(dname)				# Remove unwanted characters
-		dname = replace_space(dname)				# Standardize spaces & space markers 
-		dname = replace_word(dname)				# Standardize filename elements
-		dname = dname.rstrip('_')				# Remove trailing underscore(s)
-		
-   		dname = dname.title()					# Reset Directory Name to Title Case
-		
-		dname = replace_source(dname)				# Standardize Source Prefixes
-
-		
-		shutil.move(dirpath+"/"+d, dirpath+"/"+dname)		# Rename directories
-		print ("mv "+dirpath+"/"+d+" "+dirpath+"/"+dname)	# Display changed directories
-		
 # --------------------------------------------------------
 # EOF
 # --------------------------------------------------------	
