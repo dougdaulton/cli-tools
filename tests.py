@@ -30,11 +30,11 @@ else:
 # Set targetdirs & file extension lists
 # --------------------------------------------------------
 
-dir_isos = "/go/PROCESS/00_ISOS/TEST"                                # Watch Folder:  ISOs
+dir_isos = "/go/TR/02_TARGET/00_ISOS"                                # Watch Folder:  ISOs
 
-dir_tarballs = "/go/PROCESS/01_TARBALLS/TEST"                        # Watch Folder: Tarballs
+dir_tarballs = "/go/TR/02_TARGET/01_TARBALLS"                        # Watch Folder: Tarballs
 
-dir_reencode = "/go/PROCESS/02_REENCODE/TEST"                        # Watch Folder: Reencodes
+dir_reencode = "/go/TR/02_TARGET/02_REENCODES"                        # Watch Folder: Reencodes
 
 #dir_isos = "/go/PROCESS/00_ISOS"                                # Watch Folder:  ISOs
 
