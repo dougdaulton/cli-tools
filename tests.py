@@ -60,7 +60,7 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions
 
 
 def parse_dir (source_dir):
-    directory_info = os.walk(sourcedir,, topdown=True):                 # Parse The Directory
+    directory_info = os.walk(sourcedir,topdown=True)                # Parse The Directory
     
     dirpath = directory_info[1]
     dirnames = directory_info[2]
@@ -125,7 +125,7 @@ def find_move_reencode (dirpath, dirnames, filenames):
 # FIND & MOVE filenames
 # --------------------------------------------------------
 
-parse_dir()
+parse_dir(sourcedir)
 
 print dirpath
 print dirs
