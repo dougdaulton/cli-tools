@@ -90,11 +90,11 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
-            iso_dirs = set(iso_dirs)
-            print ("++++++++++\n"+iso_dirs+"++++++++++\n\n") 
+iso_dirs = set(iso_dirs)
+print ("++++++++++\n"+iso_dirs+"++++++++++\n\n") 
 
-            tarball_dirs = set(tarball_dirs)
-            print ("++++++++++\n"+tarball_dirs+"++++++++++\n") 
+tarball_dirs = set(tarball_dirs)
+print ("++++++++++\n"+tarball_dirs+"++++++++++\n") 
 # --------------------------------------------------------
 # EOF
 # --------------------------------------------------------	
