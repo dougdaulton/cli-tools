@@ -59,7 +59,7 @@ reencode_dirs = [ ]
 # Set targetdirs & file extension lists
 # --------------------------------------------------------
 
-def find_move_iso (dirpath, dirs, files)
+def find_move_iso (dirpath, dirs, files):
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
         
@@ -74,7 +74,7 @@ def find_move_iso (dirpath, dirs, files)
         return iso_dirs
 
 
-def find_move_tarball (dirpath, dirs, files)
+def find_move_tarball (dirpath, dirs, files):
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
         
@@ -89,7 +89,7 @@ def find_move_tarball (dirpath, dirs, files)
         return tarball_dirs
 
 
-def find_move_reencode (dirpath, dirs, files)
+def find_move_reencode (dirpath, dirs, files):
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
         
