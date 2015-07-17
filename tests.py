@@ -48,14 +48,17 @@ exts_tarballs= [".tar",".TAR",".tgz",".TGZ",".zip",".ZIP"]     # File Extensions
 
 exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions (Reencodes)
 
+iso_dirs = []
+
+tarball_dirs = []
+
+reencode_dirs = []
 
 # --------------------------------------------------------
 # Set targetdirs & file extension lists
 # --------------------------------------------------------
 
-def find_move_iso (dirpath, dirs, files):
-    
-    iso_dirs = []
+def find_move_iso (dirpath, dirs, files, iso_dirs):
     
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
@@ -71,10 +74,8 @@ def find_move_iso (dirpath, dirs, files):
         return iso_dirs
 
 
-def find_move_tarball (dirpath, dirs, files):
-    
-    tarball_dirs = []
-    
+def find_move_tarball (dirpath, dirs, files, tarball_dirs):
+
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
         
@@ -89,9 +90,7 @@ def find_move_tarball (dirpath, dirs, files):
         return tarball_dirs
 
 
-def find_move_reencode (dirpath, dirs, files):
-    
-    reencode_dirs = []
+def find_move_reencode (dirpath, dirs, files, reencode_dirs):
     
     for f in files:
         fname, fext = os.path.splitext(f)                       # Split files into basename & ext
