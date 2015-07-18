@@ -19,6 +19,7 @@ print "##########################################"
 # --------------------------------------------------------
 parser = OptionParser()
 parser.add_option("-d", dest="dir")
+parser.add_option("-t", action="store_true", dest="test")
 
 (options, args) = parser.parse_args()
 
@@ -30,20 +31,25 @@ else:
 
 
 # --------------------------------------------------------
-# Set targetdirs & file extension lists
+# Set targetdirs
 # --------------------------------------------------------
 
-target_isos = "/go/TR/02_TARGET/00_ISOS"                                # Watch Folder:  ISOs
+if options.test == True:
+    target_root = "/go/TR/02_TARGET/"
 
-target_tarballs = "/go/TR/02_TARGET/01_TARBALLS"                        # Watch Folder: Tarballs
+else:
+    target_root = "/go/PROCESS/"
 
-target_reencodes = "/go/TR/02_TARGET/02_REENCODES"                      # Watch Folder: Reencodes
+target_isos = target_root+"00_ISOS"                                # Watch Folder:  ISOs
 
-#target_isos = "/go/PROCESS/00_ISOS"                                # Watch Folder:  ISOs
+target_tarballs = target_root+"01_TARBALLS"                        # Watch Folder: Tarballs
 
-#target_tarballs = "/go/PROCESS/01_TARBALLS"                        # Watch Folder: Tarballs
+target_reencodes = target_root+"02_REENCODES"                      # Watch Folder: Reencodes
 
-#target_reencodes = "/go/PROCESS/02_REENCODE"                        # Watch Folder: Reencodes
+
+# --------------------------------------------------------
+# Set file extension lists
+# --------------------------------------------------------
 
 exts_isos = [".iso",".ISO"]                                    # File Extensions (ISOs)
 
@@ -62,6 +68,8 @@ def find_move_iso ( sourcedir, exts_isos ):
     targetpath = target_isos                                            # Set target directory
 
     iso_dirs =[]
+    
+    isos_moved = 0
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
     
@@ -71,15 +79,18 @@ def find_move_iso ( sourcedir, exts_isos ):
 
             if fext in exts_isos:                   # FIND & MOVE ISOS
 
-                print fname+fext
+                print "  + "+fname+fext
 
-#                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
-#                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
+                if options.test == False:
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 iso_dirs.append(dirpath)
+                
+                isos_moved = isos_moved+1
 
-#            else:
-#                print f+" is not a an ISO."
+    if isos_moved == 0:
+        print "No ISOs found."
+
 
     return iso_dirs
 
@@ -89,6 +100,8 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
     targetpath = target_tarballs                        # Set target directory
 
     tarball_dirs =[]
+    
+    tarballs_moved = 0
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
     
@@ -98,15 +111,17 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
             if fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 
-                print fname+fext
+                print "  + "+fname+fext
 
-#                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
-#              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
+                if options.test == False:
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 tarball_dirs.append(dirpath) 
+                
+                tarballs_moved = tarballs_moved+1
 
-#            else:
-#                print f+" is not a tarball."
+    if tarballs_moved == 0:
+        print "No tarballs found."
 
     return tarball_dirs
 
@@ -116,6 +131,8 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
     targetpath = target_reencodes                       # Set target directory
 
     reencode_dirs =[]
+    
+    reencodes_moved = 0
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
 
@@ -125,16 +142,14 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
             if fext in exts_reencodes:              # FIND & MOVE Reencodes
 
-#                print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
-#                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
+                if options.test == False:
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 reencode_dirs.append(dirpath) 
+                
+                reencodes_moved = reencodes_moved+1
 
-#            else:
-#                print "No reencodes found."
-
-    return reencode_dirs
-
+    return (reencodes_moved, reencode_dirs)
 
 # --------------------------------------------------------
 # FIND & MOVE ISOS
@@ -169,11 +184,14 @@ print "\n# ------------------------------------"
 print "# Reencodes Moved"
 print "# ------------------------------------"
 
-reencode_dirs = find_move_reencode (sourcedir, exts_reencodes)
+reencodes_moved, reencode_dirs = find_move_reencode (sourcedir, exts_reencodes)
 
 reencode_dirs = list(set(reencode_dirs))
 
-print ("\n".join(reencode_dirs))
+if reencodes_moved == 0:
+    print "No Reencodes found."
+else:
+    print ("\n".join(reencode_dirs))
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
