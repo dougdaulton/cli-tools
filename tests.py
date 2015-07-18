@@ -73,7 +73,7 @@ def find_move_iso ( sourcedir, exts_isos ):
 
                 print "FILE1: "+fname+fext+"/n/n"
 
-                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
+                print ("mv "+dirpath+"/"+fname.fext+" --> "+targetpath+"/"+fname.fext)    # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 iso_dirs.append(dirpath)
