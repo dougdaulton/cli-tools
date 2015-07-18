@@ -59,23 +59,23 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions
 
 def find_move_iso (sourcedir, exts_isos):
 
+    iso_dirs = [ ]
+    
+    targetpath = target_isos                                            # Set target directory
+
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
-            fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
+            fname, fext = os.path.splitext(f)                           # Split filenames into basename & ext
 
-#            if any(fext in x for x in exts_isos):                   # FIND & MOVE ISOS           
             for fext in exts_isos:                   # FIND & MOVE ISOS
                 print "EXT: "+fext+"/n/n"
-                iso_dirs = [ ]
-                
-		movedfile = fname+fext
-		
-                targetpath = target_isos                            # Set target directory
                
                 print ("mv "+dirpath+"/"+movedfile+" --> "+targetpath+"/"+movedfile)    # Move File (Display)
     #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-                iso_dirs = iso_dirs.extend(dirpath) 
+                iso_dirs = iso_dirs.extend(dirpath)
+                
+                break 
                 
             else:
                 print "No ISOs found."
