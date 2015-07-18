@@ -71,9 +71,9 @@ def find_move_iso ( sourcedir, exts_isos ):
 
             if fext in exts_isos:                   # FIND & MOVE ISOS
 
-                print "\n\ISO: "+fname+fext
+                print "ISO Moved: "+fname+fext
 
-                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
+#                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 iso_dirs.append(dirpath)
@@ -98,9 +98,9 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
             if fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 
-                print "\n\nTARBALL: "+fname+fext+"\n"
+                print "TARBALL Moved: "+fname+fext+"\n"
 
-                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
+#                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 tarball_dirs.append(dirpath) 
@@ -125,9 +125,9 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
             if fext in exts_reencodes:              # FIND & MOVE Reencodes
 
-                print "\n\nREENCODE: "+fname+fext
+                print "REENCODES Moved: "+dirnames
 
-                print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
+#                print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 reencode_dirs.append(dirpath) 
