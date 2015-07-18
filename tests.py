@@ -68,7 +68,7 @@ def find_move_iso ( sourcedir, exts_isos ):
 	print filenames
 
         for f in filenames:
-            fname, fext = os.path.splitext(f)                           # Split filenames into basename & ext
+            fname,fext = os.path.splitext(f)                           # Split filenames into basename & ext
 
             print "FILE: "+fname+fext+"/n/n"
 
@@ -97,7 +97,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
-            fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
+            fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
             
             for fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 print "EXT: "+fext+"/n/n"
@@ -121,7 +121,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
-            fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
+            fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
 
             for fext in exts_reencodes:              # FIND & MOVE Reencodes
 
