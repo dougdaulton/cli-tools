@@ -117,9 +117,9 @@ def find_move_reencode (sourcedir):
 # FIND & MOVE ISOS
 # --------------------------------------------------------
 
-find_move_iso (sourcedir)
+iso_dirs = find_move_iso (sourcedir)
 
-print find_move_iso(sourcedir)
+# print find_move_iso(sourcedir)
 
 iso_dirs = set(iso_dirs)
     
@@ -132,9 +132,9 @@ print "# ------------------------------------\n"
 # FIND & MOVE TARBALLS
 # --------------------------------------------------------
 
-find_move_tarball (sourcedir)
+tarball_dirs = find_move_tarball (sourcedir)
 
-print find_move_tarball(sourcedir)
+# print find_move_tarball(sourcedir)
 
 tarball_dirs = set(tarball_dirs)
 
@@ -147,9 +147,9 @@ print "# ------------------------------------\n"
 # FIND & MOVE REENCODESs
 # --------------------------------------------------------
 
-find_move_reencode (sourcedir)
+reencode_dirs = find_move_reencode (sourcedir)
 
-print find_move_reencode(sourcedir)
+#print find_move_reencode(sourcedir)
 
 reencode_dirs = set(reencode_dirs)
 
