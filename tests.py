@@ -71,15 +71,15 @@ def find_move_iso ( sourcedir, exts_isos ):
 
             if fext in exts_isos:                   # FIND & MOVE ISOS
 
-                print "FILE1: "+fname+fext+"/n/n"
+                print "\n\ISO: "+fname+fext
 
-                print ("mv "+dirpath+"/"+fname.fext+" --> "+targetpath+"/"+fname.fext)    # Move File (Display)
+                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 iso_dirs.append(dirpath)
 
             else:
-                print f+" is not a an ISO."
+#                print f+" is not a an ISO."
 
     return iso_dirs
 
@@ -98,7 +98,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
             if fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 
-                print "FILE2: "+fname+fext+"/n/n"
+                print "\n\nTARBALL: "+fname+fext+"\n"
 
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -106,7 +106,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
                 tarball_dirs.append(dirpath) 
 
             else:
-                print f+" is not a tarball."
+#                print f+" is not a tarball."
 
     return tarball_dirs
 
@@ -125,7 +125,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
             if fext in exts_reencodes:              # FIND & MOVE Reencodes
 
-                print "FILE3: "+fname+fext+"/n/n"
+                print "\n\nREENCODE: "+fname+fext
 
                 print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -133,7 +133,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
                 reencode_dirs.append(dirpath) 
 
             else:
-                print "No reencodes found."
+#                print "No reencodes found."
 
     return reencode_dirs
 
