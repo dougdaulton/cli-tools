@@ -129,7 +129,7 @@ def find_move_reencode (sourcedir):
 
 iso_dirs = find_move_iso (sourcedir)
 
-iso_dirs = set(iso_dirs)
+#iso_dirs = set(iso_dirs)
     
 print "\n# ------------------------------------"
 print "# COMPLETED: ISO MOVES"
@@ -142,7 +142,7 @@ print "# ------------------------------------\n"
 
 tarball_dirs = find_move_tarball (sourcedir)
 
-tarball_dirs = set(tarball_dirs)
+#tarball_dirs = set(tarball_dirs)
 
 print "\n# ------------------------------------"
 print "# COMPLETED: TARBALL MOVES"
@@ -155,7 +155,7 @@ print "# ------------------------------------\n"
 
 reencode_dirs = find_move_reencode (sourcedir)
 
-reencode_dirs = set(reencode_dirs)
+# reencode_dirs = set(reencode_dirs)
 
 print "\n# ------------------------------------"
 print "# COMPLETED: REENCODE MOVES"
@@ -166,16 +166,15 @@ print "# ------------------------------------\n"
 # --------------------------------------------------------
 
 print "\n# ------------------------------------"
-
-pprint.pprint(iso_dirs) 
+pprint(iso_dirs) 
 print "# ------------------------------------\n"
 
 print "\n# ------------------------------------"
-pprint.pprint(tarball_dirs) 
+pprint(tarball_dirs) 
 print "# ------------------------------------\n\n"
 
 print "\n# ------------------------------------"
-pprint.pprint(reencode_dirs) 
+pprint(reencode_dirs) 
 print "# ------------------------------------\n\n"
 
 print "################ EOS ####################"
