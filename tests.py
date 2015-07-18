@@ -59,14 +59,15 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions
 
 def find_move_iso (sourcedir):
 
-    iso_dirs = []
-
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
- 
+
 #            if any(fext in x for x in exts_isos):                   # FIND & MOVE ISOS           
             for fext in exts_isos:                   # FIND & MOVE ISOS
+            
+                iso_dirs = []
+                
                 targetpath = target_isos                            # Set target directory
                
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
@@ -82,13 +83,14 @@ def find_move_iso (sourcedir):
 
 def find_move_tarball (sourcedir):
 
-    tarball_dirs = []
-
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
             
-            if any(fext in x for x in exts_tarballs):               # FIND & MOVE TARBALLS
+            for fext in exts__tarballs:               # FIND & MOVE TARBALLS
+            
+                tarball_dirs = []
+                
                 targetpath = target_tarballs                        # Set target directory
                 
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
@@ -104,13 +106,14 @@ def find_move_tarball (sourcedir):
 
 def find_move_reencode (sourcedir):
 
-    reencode_dirs = []
-
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
-            
-            if any(fext in x for x in exts_reencodes):              # FIND & MOVE Reencodes
+
+            for fext in exts_reencodes:              # FIND & MOVE Reencodes
+
+                reencode_dirs = []
+
                 targetpath = target_reencodes                       # Set target directory
 
                 print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
