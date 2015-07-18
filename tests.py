@@ -56,9 +56,9 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions
 
 def find_move_iso (sourcedir):
 
-    iso_dirs = [ ]
+    iso_dirs = []
 
-    for dirpath, dirnames, filenames in os.walk(sourcedir):
+    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
             
@@ -67,7 +67,7 @@ def find_move_iso (sourcedir):
                
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
     #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
-    
+
                 iso_dirs = iso_dirs.extend(dirpath) 
                 
             else:
@@ -89,7 +89,7 @@ def find_move_tarball (sourcedir):
                 
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
     #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
-    
+
                 tarball_dirs = tarball_dirs.extend(dirpath) 
                 
             else:
@@ -109,7 +109,6 @@ def find_move_reencode (sourcedir):
             if any(fext in x for x in exts_reencodes):              # FIND & MOVE Reencodes
                 targetpath = target_reencodes                       # Set target directory
 
-#                dir2move = os.path.basename(dirpath)
                 print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
     #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
     
@@ -169,6 +168,10 @@ print "# ------------------------------------\n"
 
 print "\n# ------------------------------------"
 print (tarball_dirs) 
+print "# ------------------------------------\n\n"
+
+print "\n# ------------------------------------"
+print (reencode_dirs) 
 print "# ------------------------------------\n\n"
 
 print "################ EOS ####################"
