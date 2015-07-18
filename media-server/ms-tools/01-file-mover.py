@@ -30,6 +30,7 @@ import shutil
 from inspect import getmembers
 from pprint import pprint
 from optparse import OptionParser
+from termcolor import colored
 
 
 # --------------------------------------------------------
@@ -66,6 +67,17 @@ target_reencodes = target_root+"02_REENCODES"                      # Watch Folde
 
 
 # --------------------------------------------------------
+# Set cruft cull list
+# --------------------------------------------------------
+
+cruft_names = [
+    "Torrent","H33T", "Demonoid"                                    # Name segments to cull
+]
+
+cruft_exts = [".url",".torrent"]                                    # File extensions to cull
+
+
+# --------------------------------------------------------
 # Set file extension lists
 # --------------------------------------------------------
 
@@ -77,9 +89,104 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]        # File Exten
 
 
 # --------------------------------------------------------
-# Set targetdirs & file extension lists
+# Required Functions
 # --------------------------------------------------------
 
+
+def cull_cruft ( sourcedir, cruft_names, cruft_exts ):
+
+    cruft_removed = 0
+
+    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    
+        for f in filenames:
+
+            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
+            
+            remove_path = dirpath+"/"+f
+
+            if any(cruft in fname for cruft in cruft_names):
+#           if fname in cruft_exts:                                  # FIND & DELETE CRUFT BY NAME
+
+                print colored("  + ","red"), fname+fext
+
+                if options.test == False:
+                    os.remove(dirpath+"/"+f)                        # Delete Cruft (Execute)
+                else:
+                    print colored("     rm","magenta",attrs=['bold']), colored(remove_path, "blue")
+
+                cruft_removed = cruft_removed+1
+
+            elif fext in cruft_exts:                                 # FIND & DELETE CRUFT BY EXT
+
+                print colored("  + ","red"), fname+fext
+
+                if options.test == False:
+                    os.remove(dirpath+"/"+f)                        # Delete Cruft (Execute)
+                else:
+                    print colored("     rm","magenta",attrs=['bold']), colored(remove_path, "blue")
+
+                cruft_removed = cruft_removed+1
+
+    if cruft_removed == 0:
+        print "No cruft found."
+
+    return cruft_removed
+
+
+def find_move_reencode ( sourcedir, exts_reencodes ):
+
+    targetpath = target_reencodes                                   # Set target directory
+
+    reencode_dirs =[]
+    
+    reencodes_moved = 0
+
+    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+
+        for f in filenames:
+
+            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
+
+            next(x for x in lst if ...)
+            if fext in exts_reencodes:                              # FIND & MOVE Reencodes
+
+                if options.test == False:
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
+
+                reencode_dirs.append(dirpath) 
+                
+                reencodes_moved = reencodes_moved+1
+
+    return (reencodes_moved, reencode_dirs)
+    
+""""
+def find_move_reencode ( sourcedir, exts_reencodes ):
+
+    targetpath = target_reencodes                                   # Set target directory
+
+    reencode_dirs =[]
+    
+    reencodes_moved = 0
+
+    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+
+        for f in filenames:
+
+            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
+
+            next(x for x in lst if ...)
+            if fext in exts_reencodes:                              # FIND & MOVE Reencodes
+
+                if options.test == False:
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
+
+                reencode_dirs.append(dirpath) 
+                
+                reencodes_moved = reencodes_moved+1
+
+    return (reencodes_moved, reencode_dirs)
+"""
 
 def find_move_iso ( sourcedir, exts_isos ):
 
@@ -97,20 +204,38 @@ def find_move_iso ( sourcedir, exts_isos ):
 
             if fext in exts_isos:                                   # FIND & MOVE ISOS
 
-                print "  + "+fname+fext
+                if dirpath == sourcedir:
 
-                if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
+                    move_source = dirpath+f
+                    move_target = targetpath+"/"+f
 
-                iso_dirs.append(dirpath)
-                
-                isos_moved = isos_moved+1
+                    print colored("  + ","yellow"), fname+fext
+
+                    if options.test == False:
+                        shutil.move(move_source, move_target)    # Move File (Execute)
+                    else:
+                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
+
+                    isos_moved = isos_moved+1
+
+                else:
+                    
+                    move_source = dirpath
+                    move_target = targetpath+"/."
+
+                    print colored("  + ","cyan"), fname+fext
+                    
+                    if options.test == False:
+                        shutil.move(move_source, move_target) 
+                    else:
+                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
+
+                    isos_moved = isos_moved+1
 
     if isos_moved == 0:
         print "No ISOs found."
 
-
-    return iso_dirs
+    return (isos_moved, iso_dirs)
 
 
 def find_move_tarball ( sourcedir, exts_tarballs ):
@@ -128,104 +253,119 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
             fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
 
             if fext in exts_tarballs:                               # FIND & MOVE TARBALLS
-                
-                print "  + "+fname+fext
 
-                if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
+                if dirpath == sourcedir:
 
-                tarball_dirs.append(dirpath) 
-                
-                tarballs_moved = tarballs_moved+1
+                    move_source = dirpath+f
+                    move_target = targetpath+"/"+f
+
+                    print colored("  + ","yellow"), fname+fext
+                    if options.test == False:
+                        shutil.move(move_source, move_target)    # Move File (Execute)
+                    else:
+                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
+
+                    tarballs_moved = tarballs_moved+1
+
+                else:
+                    
+                    move_source = dirpath
+                    move_target = targetpath+"/."
+
+                    print colored("  + ","cyan"), fname+fext
+                    
+                    if options.test == False:
+                        shutil.move(move_source, move_target) 
+                    else:
+                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
+
+                    tarballs_moved = tarballs_moved+1
 
     if tarballs_moved == 0:
         print "No tarballs found."
 
-    return tarball_dirs
-
-
-def find_move_reencode ( sourcedir, exts_reencodes ):
-
-    targetpath = target_reencodes                                   # Set target directory
-
-    reencode_dirs =[]
-    
-    reencodes_moved = 0
-
-    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
-
-        for f in filenames:
-
-            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
-
-            if fext in exts_reencodes:                              # FIND & MOVE Reencodes
-
-                if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
-
-                reencode_dirs.append(dirpath) 
-                
-                reencodes_moved = reencodes_moved+1
-
-    return (reencodes_moved, reencode_dirs)
-
-# --------------------------------------------------------
-# FIND & MOVE ISOS
-# --------------------------------------------------------
-
-print "# ------------------------------------"
-print "# ISOs Moved"
-print "# ------------------------------------"
-
-iso_dirs = find_move_iso (sourcedir, exts_isos)
-
-iso_dirs = list(set(iso_dirs))
+    return (tarballs_moved, tarball_dirs)
 
 
 # --------------------------------------------------------
-# FIND & MOVE TARBALLS
+# FIND & REMOVE CRUFT
 # --------------------------------------------------------
 
-print "\n# ------------------------------------"
-print "# Tarballs Moved"
-print "# ------------------------------------"
-tarball_dirs = find_move_tarball (sourcedir, exts_tarballs)
+print "\n------------------------------------"
+print colored("Remove Cruft","yellow")
+print "------------------------------------"
 
-tarball_dirs = list(set(tarball_dirs))
+cruft_removed = cull_cruft (sourcedir, cruft_names, cruft_exts)
+
+print "------------------------------------"
+print colored("Cruft Removed:","green"), colored(cruft_removed,"yellow"),"files\n"
 
 
 # --------------------------------------------------------
 # FIND & MOVE REENCODESs
 # --------------------------------------------------------
 
-print "\n# ------------------------------------"
-print "# Reencodes Moved"
-print "# ------------------------------------"
+print "------------------------------------"
+print colored("Move Reencodes Moved","yellow")
+print "------------------------------------"
 
 reencodes_moved, reencode_dirs = find_move_reencode (sourcedir, exts_reencodes)
 
 reencode_dirs = list(set(reencode_dirs))
 
 if reencodes_moved == 0:
-    print "No Reencodes found."
+    print "No reencodes found."
 else:
     print ("\n".join(reencode_dirs))
 
-# REMOVE EMPTY DIRECTORIES
+print "------------------------------------"
+print colored("Reencodes Moved:","green"), colored(reencodes_moved,"yellow"),"files\n"
+
+
+# --------------------------------------------------------
+# FIND & MOVE ISOS
 # --------------------------------------------------------
 
-print "\n# ------------------------------------"
-print ("\n".join(iso_dirs)) 
-print "# ------------------------------------"
+print "------------------------------------"
+print colored("Move ISOs","yellow")
+print "------------------------------------"
 
-print "\n# ------------------------------------"
+isos_moved, iso_dirs = find_move_iso (sourcedir, exts_isos)
+
+iso_dirs = list(set(iso_dirs))
+
+print "------------------------------------"
+print colored("ISOs Moved:","green"), colored(isos_moved,"yellow"),"files\n"
+
+# --------------------------------------------------------
+# FIND & MOVE TARBALLS
+# --------------------------------------------------------
+
+print "------------------------------------"
+print colored("Move Tarballs","yellow")
+print "------------------------------------"
+tarballs_moved, tarball_dirs = find_move_tarball (sourcedir, exts_tarballs)
+
+tarball_dirs = list(set(tarball_dirs))
+
+print "------------------------------------"
+print colored("Tarballs Moved:","green"), colored(tarballs_moved,"yellow"),"files\n"
+
+# REMOVE EMPTY DIRECTORIES
+# --------------------------------------------------------
+""""
+print "\n------------------------------------"
+print (\n".join(iso_dirs)) 
+print "------------------------------------"
+
+print "\n------------------------------------"
 print ("\n".join(tarball_dirs)) 
-print "# ------------------------------------"
+print "------------------------------------"
 
-print "\n# ------------------------------------"
+print "\n------------------------------------"
 print ("\n".join(reencode_dirs)) 
-print "# ------------------------------------"
-
+print "------------------------------------"
+"""
 # --------------------------------------------------------
 # EOF
 # --------------------------------------------------------
