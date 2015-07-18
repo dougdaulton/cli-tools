@@ -79,7 +79,7 @@ def find_move_iso ( sourcedir, exts_isos ):
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-                iso_dirs.extend(dirpath)
+                iso_dirs.append(dirpath)
 
 #                break 
 
@@ -105,7 +105,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-                tarball_dirs.extend(dirpath) 
+                tarball_dirs.append(dirpath) 
 
             else:
                 print "No tarballs found."
@@ -130,7 +130,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
                 print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
-                reencode_dirs.extend(dirpath) 
+                reencode_dirs.append(dirpath) 
 
             else:
                 print "No reencodes found."
