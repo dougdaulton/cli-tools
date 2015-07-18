@@ -57,7 +57,7 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions
 # --------------------------------------------------------
 
 
-def find_move_iso (sourcedir):
+def find_move_iso (sourcedir, exts_isos):
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
@@ -81,7 +81,7 @@ def find_move_iso (sourcedir):
             return iso_dirs
 
 
-def find_move_tarball (sourcedir):
+def find_move_tarball (sourcedir, exts_tarballs):
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
@@ -104,7 +104,7 @@ def find_move_tarball (sourcedir):
             return tarball_dirs
 
 
-def find_move_reencode (sourcedir):
+def find_move_reencode (sourcedir, exts_reencodes):
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
@@ -131,7 +131,7 @@ def find_move_reencode (sourcedir):
 # FIND & MOVE ISOS
 # --------------------------------------------------------
 
-iso_dirs = find_move_iso (sourcedir)
+iso_dirs = find_move_iso (sourcedir, exts_isos)
 
 #iso_dirs = set(iso_dirs)
     
@@ -144,7 +144,7 @@ print "# ------------------------------------\n"
 # FIND & MOVE TARBALLS
 # --------------------------------------------------------
 
-tarball_dirs = find_move_tarball (sourcedir)
+tarball_dirs = find_move_tarball (sourcedir, exts_tarballs)
 
 #tarball_dirs = set(tarball_dirs)
 
@@ -157,7 +157,7 @@ print "# ------------------------------------\n"
 # FIND & MOVE REENCODESs
 # --------------------------------------------------------
 
-reencode_dirs = find_move_reencode (sourcedir)
+reencode_dirs = find_move_reencode (sourcedir, exts_reencodes)
 
 # reencode_dirs = set(reencode_dirs)
 
