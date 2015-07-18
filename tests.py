@@ -71,7 +71,7 @@ def find_move_iso ( sourcedir, exts_isos ):
 
             if fext in exts_isos:                   # FIND & MOVE ISOS
 
-                print "ISO Moved: "+fname+fext
+                print fname+fext
 
 #                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -98,7 +98,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
             if fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 
-                print "TARBALL Moved: "+fname+fext
+                print fname+fext
 
 #                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -124,8 +124,6 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
             fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
 
             if fext in exts_reencodes:              # FIND & MOVE Reencodes
-
-#                print "REENCODES Moved: "+dirpath
 
 #                print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -175,22 +173,21 @@ reencode_dirs = find_move_reencode (sourcedir, exts_reencodes)
 
 reencode_dirs = list(set(reencode_dirs))
 
-print "REENCODES Moved: \n"
-print reencode_dirs
+print ("\n".join(reencode_dirs))
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
 
 print "\n# ------------------------------------"
-print iso_dirs 
+print ("\n".join(iso_dirs)) 
 print "# ------------------------------------"
 
 print "\n# ------------------------------------"
-print tarball_dirs 
+print ("\n".join(tarball_dirs)) 
 print "# ------------------------------------"
 
 print "\n# ------------------------------------"
-print reencode_dirs 
+print ("\n".join(reencode_dirs)) 
 print "# ------------------------------------"
 
 print "################ EOS ####################"
