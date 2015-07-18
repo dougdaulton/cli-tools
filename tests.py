@@ -6,7 +6,9 @@
 import sys 
 import os 
 import shutil
-import pprint
+
+from inspect import getmembers
+from pprint import pprint
 from optparse import OptionParser
 
 
@@ -164,15 +166,16 @@ print "# ------------------------------------\n"
 # --------------------------------------------------------
 
 print "\n# ------------------------------------"
-pprint (iso_dirs) 
+
+pprint(getmembers(pprint(iso_dirs)) 
 print "# ------------------------------------\n"
 
 print "\n# ------------------------------------"
-pprint (tarball_dirs) 
+pprint(getmembers(tarball_dirs)) 
 print "# ------------------------------------\n\n"
 
 print "\n# ------------------------------------"
-pprint (reencode_dirs) 
+pprint(getmembers(reencode_dirs)) 
 print "# ------------------------------------\n\n"
 
 print "################ EOS ####################"
