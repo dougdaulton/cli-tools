@@ -64,11 +64,17 @@ def find_move_iso (sourcedir, exts_isos):
     targetpath = target_isos                                            # Set target directory
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+	
+	print filenames
+	
         for f in filenames:
             fname, fext = os.path.splitext(f)                           # Split filenames into basename & ext
 
+            print "FILE: "+fname+fext+"/n/n"
+
+
             for fext in exts_isos:                   # FIND & MOVE ISOS
-                print "FILE: "fname+fext+"/n/n"
+                print "FILE: "+fname+fext+"/n/n"
 
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
     #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
