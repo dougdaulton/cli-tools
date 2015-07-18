@@ -167,15 +167,15 @@ print "# ------------------------------------\n"
 
 print "\n# ------------------------------------"
 
-pprint(getmembers(iso_dirs)) 
+pprint.pprint(iso_dirs) 
 print "# ------------------------------------\n"
 
 print "\n# ------------------------------------"
-pprint(getmembers(tarball_dirs)) 
+pprint.pprint(tarball_dirs) 
 print "# ------------------------------------\n\n"
 
 print "\n# ------------------------------------"
-pprint(getmembers(reencode_dirs)) 
+pprint.pprint(reencode_dirs) 
 print "# ------------------------------------\n\n"
 
 print "################ EOS ####################"
