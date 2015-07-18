@@ -69,11 +69,11 @@ target_reencodes = target_root+"02_REENCODES"                      # Watch Folde
 # Set file extension lists
 # --------------------------------------------------------
 
-exts_isos = [".iso",".ISO"]                                    # File Extensions (ISOs)
+exts_isos = [".iso",".ISO"]                                         # File Extensions (ISOs)
 
-exts_tarballs= [".tar",".TAR",".tgz",".TGZ",".zip",".ZIP"]     # File Extensions (Tarballs)
+exts_tarballs= [".tar",".TAR",".tgz",".TGZ",".zip",".ZIP"]          # File Extensions (Tarballs)
 
-exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions (Reencodes)
+exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]        # File Extensions (Reencodes)
 
 
 # --------------------------------------------------------
@@ -83,7 +83,7 @@ exts_reencodes = [".avi",".AVI",".flv",".FLV",".mpg",".MPG"]   # File Extensions
 
 def find_move_iso ( sourcedir, exts_isos ):
 
-    targetpath = target_isos                                            # Set target directory
+    targetpath = target_isos                                        # Set target directory
 
     iso_dirs =[]
     
@@ -93,14 +93,14 @@ def find_move_iso ( sourcedir, exts_isos ):
     
         for f in filenames:
 
-            fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
+            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
 
-            if fext in exts_isos:                   # FIND & MOVE ISOS
+            if fext in exts_isos:                                   # FIND & MOVE ISOS
 
                 print "  + "+fname+fext
 
                 if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
 
                 iso_dirs.append(dirpath)
                 
@@ -115,7 +115,7 @@ def find_move_iso ( sourcedir, exts_isos ):
 
 def find_move_tarball ( sourcedir, exts_tarballs ):
 
-    targetpath = target_tarballs                        # Set target directory
+    targetpath = target_tarballs                                    # Set target directory
 
     tarball_dirs =[]
     
@@ -127,12 +127,12 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
             fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
 
-            if fext in exts_tarballs:               # FIND & MOVE TARBALLS
+            if fext in exts_tarballs:                               # FIND & MOVE TARBALLS
                 
                 print "  + "+fname+fext
 
                 if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
 
                 tarball_dirs.append(dirpath) 
                 
@@ -146,7 +146,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
 def find_move_reencode ( sourcedir, exts_reencodes ):
 
-    targetpath = target_reencodes                       # Set target directory
+    targetpath = target_reencodes                                   # Set target directory
 
     reencode_dirs =[]
     
@@ -156,12 +156,12 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
         for f in filenames:
 
-            fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
+            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
 
-            if fext in exts_reencodes:              # FIND & MOVE Reencodes
+            if fext in exts_reencodes:                              # FIND & MOVE Reencodes
 
                 if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
+                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
 
                 reencode_dirs.append(dirpath) 
                 
