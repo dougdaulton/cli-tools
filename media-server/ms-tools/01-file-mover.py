@@ -97,13 +97,13 @@ def cull_cruft ( sourcedir, cruft_names, cruft_exts ):
 
     cruft_removed = 0
 
-    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    for pathroot, dirnames, filenames in os.walk(sourcedir,topdown=True):
     
         for f in filenames:
 
             fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
             
-            remove_path = dirpath+"/"+f
+            remove_path = pathroot+"/"+f
 
             if any(cruft in fname for cruft in cruft_names):
 #           if fname in cruft_exts:                                  # FIND & DELETE CRUFT BY NAME
@@ -111,7 +111,7 @@ def cull_cruft ( sourcedir, cruft_names, cruft_exts ):
                 print colored("  + ","red"), fname+fext
 
                 if options.test == False:
-                    os.remove(dirpath+"/"+f)                        # Delete Cruft (Execute)
+                    os.remove(pathroot+"/"+f)                        # Delete Cruft (Execute)
                 else:
                     print colored("     rm","magenta",attrs=['bold']), colored(remove_path, "blue")
 
@@ -122,7 +122,7 @@ def cull_cruft ( sourcedir, cruft_names, cruft_exts ):
                 print colored("  + ","red"), fname+fext
 
                 if options.test == False:
-                    os.remove(dirpath+"/"+f)                        # Delete Cruft (Execute)
+                    os.remove(pathroot+"/"+f)                        # Delete Cruft (Execute)
                 else:
                     print colored("     rm","magenta",attrs=['bold']), colored(remove_path, "blue")
 
@@ -142,21 +142,21 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
     
     reencodes_moved = 0
 
-    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    for pathroot, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    
+        for p in pathroot:
 
-        for f in filenames:
+            for f in filenames:
+    
+                fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
+    
+                next(x for x in lst if ...)
+                if fext in exts_reencodes:                              # FIND & MOVE Reencodes
+    
+                    if options.test == False:
+                        shutil.move(pathroot+"/"+f, targetpath+"/"+f)    # Move File (Execute)
 
-            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
-
-            next(x for x in lst if ...)
-            if fext in exts_reencodes:                              # FIND & MOVE Reencodes
-
-                if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
-
-                reencode_dirs.append(dirpath) 
-                
-                reencodes_moved = reencodes_moved+1
+        reencodes_moved = reencodes_moved+1
 
     return (reencodes_moved, reencode_dirs)
     
@@ -169,7 +169,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
     
     reencodes_moved = 0
 
-    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    for pathroot, dirnames, filenames in os.walk(sourcedir,topdown=True):
 
         for f in filenames:
 
@@ -179,9 +179,9 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
             if fext in exts_reencodes:                              # FIND & MOVE Reencodes
 
                 if options.test == False:
-                    shutil.move(dirpath+"/"+f, targetpath+"/"+f)    # Move File (Execute)
+                    shutil.move(pathroot+"/"+f, targetpath+"/"+f)    # Move File (Execute)
 
-                reencode_dirs.append(dirpath) 
+                reencode_dirs.append(pathroot) 
                 
                 reencodes_moved = reencodes_moved+1
 
@@ -196,7 +196,7 @@ def find_move_iso ( sourcedir, exts_isos ):
     
     isos_moved = 0
 
-    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    for pathroot, dirnames, filenames in os.walk(sourcedir,topdown=True):
     
         for f in filenames:
 
@@ -204,9 +204,9 @@ def find_move_iso ( sourcedir, exts_isos ):
 
             if fext in exts_isos:                                   # FIND & MOVE ISOS
 
-                if dirpath == sourcedir:
+                if pathroot == sourcedir:
 
-                    move_source = dirpath+f
+                    move_source = pathroot+f
                     move_target = targetpath+"/"+f
 
                     print colored("  + ","yellow"), fname+fext
@@ -220,7 +220,7 @@ def find_move_iso ( sourcedir, exts_isos ):
 
                 else:
                     
-                    move_source = dirpath
+                    move_source = pathroot
                     move_target = targetpath+"/."
 
                     print colored("  + ","cyan"), fname+fext
@@ -246,7 +246,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
     
     tarballs_moved = 0
 
-    for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    for pathroot, dirnames, filenames in os.walk(sourcedir,topdown=True):
     
         for f in filenames:
 
@@ -254,9 +254,9 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
             if fext in exts_tarballs:                               # FIND & MOVE TARBALLS
 
-                if dirpath == sourcedir:
+                if pathroot == sourcedir:
 
-                    move_source = dirpath+f
+                    move_source = pathroot+f
                     move_target = targetpath+"/"+f
 
                     print colored("  + ","yellow"), fname+fext
@@ -269,7 +269,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
                 else:
                     
-                    move_source = dirpath
+                    move_source = pathroot
                     move_target = targetpath+"/."
 
                     print colored("  + ","cyan"), fname+fext
