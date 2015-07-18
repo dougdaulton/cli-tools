@@ -98,7 +98,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
             if fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 
-                print "TARBALL Moved: "+fname+fext+"\n"
+                print "TARBALL Moved: "+fname+fext
 
 #                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -125,7 +125,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
             if fext in exts_reencodes:              # FIND & MOVE Reencodes
 
-                print "REENCODES Moved: "+dirnames
+                print "REENCODES Moved: "+dirpath
 
 #                print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -142,40 +142,39 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 # FIND & MOVE ISOS
 # --------------------------------------------------------
 
+print "# ------------------------------------"
+print "# ISOs Moved"
+print "# ------------------------------------\n"
+
 iso_dirs = find_move_iso (sourcedir, exts_isos)
 
 iso_dirs = set(iso_dirs)
-    
-print "\n# ------------------------------------"
-print "# COMPLETED: ISO MOVES"
-print "# ------------------------------------\n"
 
 
 # --------------------------------------------------------
 # FIND & MOVE TARBALLS
 # --------------------------------------------------------
 
+print "\n# ------------------------------------"
+print "# Tarballs Moved"
+print "# ------------------------------------\n"
 tarball_dirs = find_move_tarball (sourcedir, exts_tarballs)
 
 tarball_dirs = set(tarball_dirs)
 
-print "\n# ------------------------------------"
-print "# COMPLETED: TARBALL MOVES"
-print "# ------------------------------------\n"
 
 
 # --------------------------------------------------------
 # FIND & MOVE REENCODESs
 # --------------------------------------------------------
 
+print "\n# ------------------------------------"
+print "# Reencodes Moved"
+print "# ------------------------------------\n"
+
 reencode_dirs = find_move_reencode (sourcedir, exts_reencodes)
 
 reencode_dirs = set(reencode_dirs)
-
-print "\n# ------------------------------------"
-print "# COMPLETED: REENCODE MOVES"
-print "# ------------------------------------\n"
-
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
@@ -196,4 +195,4 @@ print "################ EOS ####################"
 
 # --------------------------------------------------------
 # EOF
-# --------------------------------------------------------	
+# --------------------------------------------------------
