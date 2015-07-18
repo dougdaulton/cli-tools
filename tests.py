@@ -61,6 +61,8 @@ def find_move_iso ( sourcedir, exts_isos ):
 
     targetpath = target_isos                                            # Set target directory
 
+    iso_dirs =[]
+
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
 
 	print filenames
@@ -79,7 +81,7 @@ def find_move_iso ( sourcedir, exts_isos ):
 
                 iso_dirs.extend(dirpath)
 
-                break 
+#                break 
 
             else:
                 print "No ISOs found."
@@ -89,6 +91,10 @@ def find_move_iso ( sourcedir, exts_isos ):
 
 def find_move_tarball ( sourcedir, exts_tarballs ):
 
+    targetpath = target_tarballs                        # Set target directory
+
+    tarball_dirs =[]
+
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
@@ -96,8 +102,6 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
             for fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 print "EXT: "+fext+"/n/n"
 
-                targetpath = target_tarballs                        # Set target directory
-                
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
@@ -111,6 +115,10 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
 
 def find_move_reencode ( sourcedir, exts_reencodes ):
 
+    targetpath = target_reencodes                       # Set target directory
+
+    reencode_Dirs =[]
+
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
@@ -118,8 +126,6 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
             for fext in exts_reencodes:              # FIND & MOVE Reencodes
 
                 print "EXT: "+fext+"/n/n"
-
-                targetpath = target_reencodes                       # Set target directory
 
                 print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
