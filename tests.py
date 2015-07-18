@@ -117,7 +117,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
     targetpath = target_reencodes                       # Set target directory
 
-    reencode_Dirs =[]
+    reencode_dirs =[]
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
