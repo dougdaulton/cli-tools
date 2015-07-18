@@ -148,7 +148,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
 
             if fext in exts_reencodes:              # FIND & MOVE Reencodes
 
-                print "REENCODES Moved: "+dirpath
+#                print "REENCODES Moved: "+dirpath
 
 #                print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -171,7 +171,7 @@ print "# ------------------------------------"
 
 iso_dirs = find_move_iso (sourcedir, exts_isos)
 
-iso_dirs = set(iso_dirs)
+iso_dirs = list(set(iso_dirs))
 
 
 # --------------------------------------------------------
@@ -183,8 +183,7 @@ print "# Tarballs Moved"
 print "# ------------------------------------"
 tarball_dirs = find_move_tarball (sourcedir, exts_tarballs)
 
-tarball_dirs = set(tarball_dirs)
-
+tarball_dirs = list(set(tarball_dirs))
 
 
 # --------------------------------------------------------
@@ -197,7 +196,10 @@ print "# ------------------------------------"
 
 reencode_dirs = find_move_reencode (sourcedir, exts_reencodes)
 
-reencode_dirs = set(reencode_dirs)
+reencode_dirs = list(set(reencode_dirs))
+
+print "REENCODES Moved: \n"
+print reencode_dirs
 
 # REMOVE EMPTY DIRECTORIES
 # --------------------------------------------------------
