@@ -65,12 +65,14 @@ def find_move_iso (sourcedir, exts_isos):
 
 #            if any(fext in x for x in exts_isos):                   # FIND & MOVE ISOS           
             for fext in exts_isos:                   # FIND & MOVE ISOS
-            
-                iso_dirs = []
+                print "EXT: "+fext+"/n/n"
+                iso_dirs = [ ]
                 
+		movedfile = fname+fext
+		
                 targetpath = target_isos                            # Set target directory
                
-                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
+                print ("mv "+dirpath+"/"+movedfile+" --> "+targetpath+"/"+movedfile)    # Move File (Display)
     #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 iso_dirs = iso_dirs.extend(dirpath) 
@@ -88,8 +90,9 @@ def find_move_tarball (sourcedir, exts_tarballs):
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
             
             for fext in exts_tarballs:               # FIND & MOVE TARBALLS
+                print "EXT: "+fext+"/n/n"
             
-                tarball_dirs = []
+                tarball_dirs = [ ]
                 
                 targetpath = target_tarballs                        # Set target directory
                 
@@ -112,7 +115,9 @@ def find_move_reencode (sourcedir, exts_reencodes):
 
             for fext in exts_reencodes:              # FIND & MOVE Reencodes
 
-                reencode_dirs = []
+                print "EXT: "+fext+"/n/n"
+
+                reencode_dirs = [ ]
 
                 targetpath = target_reencodes                       # Set target directory
 
