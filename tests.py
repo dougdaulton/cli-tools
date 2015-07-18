@@ -6,6 +6,7 @@
 import sys 
 import os 
 import shutil
+import pprint
 from optparse import OptionParser
 
 
@@ -163,15 +164,15 @@ print "# ------------------------------------\n"
 # --------------------------------------------------------
 
 print "\n# ------------------------------------"
-print (iso_dirs) 
+pprint (iso_dirs) 
 print "# ------------------------------------\n"
 
 print "\n# ------------------------------------"
-print (tarball_dirs) 
+pprint (tarball_dirs) 
 print "# ------------------------------------\n\n"
 
 print "\n# ------------------------------------"
-print (reencode_dirs) 
+pprint (reencode_dirs) 
 print "# ------------------------------------\n\n"
 
 print "################ EOS ####################"
