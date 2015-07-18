@@ -87,7 +87,7 @@ def find_move_tarball (sourcedir):
         for f in filenames:
             fname, fext = os.path.splitext(f)                       # Split filenames into basename & ext
             
-            for fext in exts__tarballs:               # FIND & MOVE TARBALLS
+            for fext in exts_tarballs:               # FIND & MOVE TARBALLS
             
                 tarball_dirs = []
                 
