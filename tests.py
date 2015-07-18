@@ -81,7 +81,7 @@ def find_move_iso ( sourcedir, exts_isos ):
             else:
                 print f+" is not a an ISO."
 
-            return iso_dirs
+    return iso_dirs
 
 
 def find_move_tarball ( sourcedir, exts_tarballs ):
@@ -108,7 +108,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
             else:
                 print f+" is not a tarball."
 
-            return tarball_dirs
+    return tarball_dirs
 
 
 def find_move_reencode ( sourcedir, exts_reencodes ):
@@ -135,7 +135,7 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
             else:
                 print "No reencodes found."
 
-            return reencode_dirs
+    return reencode_dirs
 
 
 # --------------------------------------------------------
