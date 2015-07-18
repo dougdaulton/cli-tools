@@ -64,10 +64,10 @@ def find_move_iso ( sourcedir, exts_isos ):
     iso_dirs =[]
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
-
+    
         for f in filenames:
 
-            fext,fname = os.path.splitext(f)                           # Split filenames into basename & ext
+            fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
 
             if fext in exts_isos:                   # FIND & MOVE ISOS
 
