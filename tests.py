@@ -65,16 +65,13 @@ def find_move_iso ( sourcedir, exts_isos ):
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
 
-	print filenames
-
         for f in filenames:
-            fname,fext = os.path.splitext(f)                           # Split filenames into basename & ext
 
-            print "FILE: "+fname+fext+"/n/n"
+            fext,fname = os.path.splitext(f)                           # Split filenames into basename & ext
 
+            if fext in exts_isos:                   # FIND & MOVE ISOS
 
-            for fext in exts_isos:                   # FIND & MOVE ISOS
-                print "FILE: "+fname+fext+"/n/n"
+                print "FILE1: "+fname+fext+"/n/n"
 
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -82,7 +79,7 @@ def find_move_iso ( sourcedir, exts_isos ):
                 iso_dirs.append(dirpath)
 
             else:
-                print "No ISOs found."
+                print f+" is not a an ISO."
 
             return iso_dirs
 
@@ -94,12 +91,14 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
     tarball_dirs =[]
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+    
         for f in filenames:
+
             fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
-            
-            for fext in exts_tarballs:               # FIND & MOVE TARBALLS
+
+            if fext in exts_tarballs:               # FIND & MOVE TARBALLS
                 
-                print "EXT2: "+fname+fext+"/n/n"
+                print "FILE2: "+fname+fext+"/n/n"
 
                 print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
 #              shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
@@ -107,7 +106,7 @@ def find_move_tarball ( sourcedir, exts_tarballs ):
                 tarball_dirs.append(dirpath) 
 
             else:
-                print "No tarballs found."
+                print f+" is not a tarball."
 
             return tarball_dirs
 
@@ -119,12 +118,14 @@ def find_move_reencode ( sourcedir, exts_reencodes ):
     reencode_dirs =[]
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
+
         for f in filenames:
+
             fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
 
-            for fext in exts_reencodes:              # FIND & MOVE Reencodes
+            if fext in exts_reencodes:              # FIND & MOVE Reencodes
 
-                print "EXT3: "+fname+fext+"/n/n"
+                print "FILE3: "+fname+fext+"/n/n"
 
                 print ("mv "+dirpath+" --> "+targetpath+"/")        # Move File (Display)
 #                shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
