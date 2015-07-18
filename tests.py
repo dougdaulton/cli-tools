@@ -68,9 +68,9 @@ def find_move_iso (sourcedir, exts_isos):
             fname, fext = os.path.splitext(f)                           # Split filenames into basename & ext
 
             for fext in exts_isos:                   # FIND & MOVE ISOS
-                print "EXT: "+fext+"/n/n"
-               
-                print ("mv "+dirpath+"/"+movedfile+" --> "+targetpath+"/"+movedfile)    # Move File (Display)
+                print "FILE: "fname+fext+"/n/n"
+
+                print ("mv "+dirpath+"/"+f+" --> "+targetpath+"/"+f)    # Move File (Display)
     #           shutil.move(dirpath+"/"+f, targetpath+"/"+f)       # Move File (Execute)
 
                 iso_dirs = iso_dirs.extend(dirpath)
