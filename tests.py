@@ -78,7 +78,7 @@ def find_move_iso (sourcedir):
 
 def find_move_tarball (sourcedir):
 
-#    tarball_dirs = []
+    tarball_dirs = []
 
     for dirpath, dirnames, filenames in os.walk(sourcedir,topdown=True):
         for f in filenames:
