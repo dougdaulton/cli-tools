@@ -176,7 +176,9 @@ def find_move_reencode ( source_dir, exts_reencodes, target_reencodes ):
                 else:
                     print colored("     mv", "magenta", attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
                 break
+
     reencodes_moved = reencode_files_moved + reencode_folders_moved
+
     if reencodes_moved == 0:
         print "No reencodes found."
 
