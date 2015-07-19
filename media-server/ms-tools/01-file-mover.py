@@ -133,7 +133,7 @@ def cull_cruft ( source_dir, cruft_names, cruft_exts ):
     return cruft_removed
 
 
-def find_move_reencode ( source_dir, exts_reencodes, target_reencodes ):
+def find_move_files ( files_type, source_dir, ext_list, target_dir ):
 
     """
         1. Walk source_dir
@@ -151,127 +151,37 @@ def find_move_reencode ( source_dir, exts_reencodes, target_reencodes ):
                 + break and skip to the next sub_dir
     """
 
-    reencode_folders_moved = 0
-    reencode_files_moved = 0
-
+    files_moved = 0
+    folders_moved = 0
+    
     for current_dir, sub_dirs, filenames in os.walk(source_dir,topdown=True):
         for f in filenames:
-            if os.path.splitext(f)[1] in exts_reencodes:
+            if os.path.splitext(f)[1] in ext_list:
                 if current_dir is source_dir:
                     move_source = os.path.join(current_dir, f)
                     print colored("  + ","yellow"), f
-                    reencode_files_moved += 1
+                    files_moved += 1
                 else:
                     move_source = current_dir
-                    reencode_folders_moved += 1
+                    folders_moved += 1
                     print colored("  * ","cyan"), current_dir
                 
-                move_target = os.path.join(target_reencodes)
+                move_target = os.path.join(target_dir)
+                
                 if not options.test:
                     shutil.move(move_source, move_target)
                 else:
                     print colored("     mv", "magenta", attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
                 
-                if current_dir is not source_dir:
+                if (current_dir is not source_dir and files_type == "reencodes"):
                     break
 
-    reencodes_moved = reencode_files_moved + reencode_folders_moved
+    total_moved = files_moved + folders_moved
 
-    if reencodes_moved == 0:
-        print "No reencodes found."
+    if total_moved == 0:
+        print "No "+files_type+" found."
 
-    return (reencode_folders_moved,reencode_files_moved)
-
-
-def find_move_iso ( source_dir, exts_isos, target_isos ):
-
-    isos_moved = 0
-
-    for current_dir, sub_dirs, filenames in os.walk(source_dir,topdown=True):
-    
-        for f in filenames:
-
-            fname,fext = os.path.splitext(f)                        # Split filenames into basename & ext
-
-            if fext in exts_isos:                                   # FIND & MOVE ISOS
-
-                if current_dir == source_dir:
-
-                    move_source = current_dir+f
-                    move_target = target_isos+"/"+f
-
-                    print colored("  + ","yellow"), fname+fext
-
-                    if options.test == False:
-                        shutil.move(move_source, move_target)    # Move File (Execute)
-                    else:
-                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
-
-                    isos_moved = isos_moved+1
-
-                else:
-                    
-                    move_source = current_dir
-                    move_target = target_isos+"/."
-
-                    print colored("  * ","cyan"), fname+fext
-                    
-                    if options.test == False:
-                        shutil.move(move_source, move_target) 
-                    else:
-                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
-
-                    isos_moved = isos_moved+1
-
-    if isos_moved == 0:
-        print "No ISOs found."
-
-    return (isos_moved)
-
-
-def find_move_tarball ( source_dir, exts_tarballs, target_tarballs ):
-
-    tarballs_moved = 0
-
-    for current_dir, sub_dirs, filenames in os.walk(source_dir,topdown=True):
-    
-        for f in filenames:
-
-            fname,fext = os.path.splitext(f)                       # Split filenames into basename & ext
-
-            if fext in exts_tarballs:                               # FIND & MOVE TARBALLS
-
-                if current_dir == source_dir:
-
-                    move_source = current_dir+f
-                    move_target = target_tarballs+"/"+f
-
-                    print colored("  + ","yellow"), fname+fext
-                    if options.test == False:
-                        shutil.move(move_source, move_target)    # Move File (Execute)
-                    else:
-                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
-
-                    tarballs_moved = tarballs_moved+1
-
-                else:
-                    
-                    move_source = current_dir
-                    move_target = target_tarballs+"/."
-
-                    print colored("  * ","cyan"), fname+fext
-                    
-                    if options.test == False:
-                        shutil.move(move_source, move_target) 
-                    else:
-                        print colored("     mv","magenta",attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
-
-                    tarballs_moved = tarballs_moved+1
-
-    if tarballs_moved == 0:
-        print "No tarballs found."
-
-    return (tarballs_moved)
+    return (files_moved, folders_moved)
 
 
 # --------------------------------------------------------
@@ -296,7 +206,7 @@ print "------------------------------------"
 print colored("Move Reencodes","yellow")
 print "------------------------------------"
 
-reencode_folders_moved, reencode_files_moved = find_move_reencode (source_dir, exts_reencodes, target_reencodes)
+reencode_files_moved, reencode_folders_moved = find_move_files ("reencodes", source_dir, exts_reencodes, target_reencodes)
 
 print "------------------------------------"
 print colored("Reencodes Moved:","green"), "folders:", colored(reencode_folders_moved,"yellow"), "files:", colored(reencode_files_moved,"yellow"),"\n"
@@ -310,10 +220,10 @@ print "------------------------------------"
 print colored("Move ISOs","yellow")
 print "------------------------------------"
 
-isos_moved = find_move_iso (source_dir, exts_isos, target_isos)
+iso_files_moved, iso_folders_moved = find_move_files ("ISOs", source_dir, exts_isos, target_isos)
 
 print "------------------------------------"
-print colored("ISOs Moved:","green"), colored(isos_moved,"yellow"),"files\n"
+print colored("ISOs Moved:","green"), "folders:", colored(iso_folders_moved,"yellow"), "files:", colored(iso_files_moved,"yellow"),"\n"
 
 
 # --------------------------------------------------------
@@ -324,10 +234,10 @@ print "------------------------------------"
 print colored("Move Tarballs","yellow")
 print "------------------------------------"
 
-tarballs_moved = find_move_tarball (source_dir, exts_tarballs, target_tarballs)
+tarball_files_moved, tarball_folders_moved = find_move_files ("tarballs", source_dir, exts_tarballs, target_tarballs)
 
 print "------------------------------------"
-print colored("Tarballs Moved:","green"), colored(tarballs_moved,"yellow"),"files\n"
+print colored("Tarballs Moved:","green"), "folders:", colored(tarball_folders_moved,"yellow"), "files:", colored(tarball_files_moved,"yellow"),"\n"
 
 
 # --------------------------------------------------------
