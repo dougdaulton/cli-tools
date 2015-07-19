@@ -70,10 +70,10 @@ target_reencodes = target_root+"02_REENCODES"                      # Watch Folde
 # --------------------------------------------------------
 
 cruft_names = [
-    "Torrent","H33T", "Demonoid"                                    # Name segments to cull
+    "Torrent","H33T", "Demonoid", "torrent"                         # Name segments to cull
 ]
 
-cruft_exts = [".url",".torrent"]                                    # File extensions to cull
+cruft_exts = [".url",".torrent",".nfo"]                              # File extensions to cull
 
 
 # --------------------------------------------------------

@@ -53,7 +53,8 @@ remove_chars = [
 ]
 
 remove_words = [
-    ["YIFY", ""],["ETRG", ""],["[ www.Torrenting.com ] - ", ""], ["{AceMerlin}", ""]
+    ["YIFY", ""],["ETRG", ""],["[ www.Torrenting.com ] - ", ""], ["{AceMerlin}", ""],
+    ["_Sum1_Here", ""]
 ]
 
 def remove_char(fname):
@@ -71,21 +72,23 @@ def remove_word(fname):
 # --------------------------------------------------------
 
 replace_spaces = [
-    [" ", "_"], [".", "_"], ["-", "_"],["__", "_"],["___", "_"]
+    [" ", "_"], [".", "_"], ["-", "_"],["+", "_"],["_-_", "_"], 
+    ["___", "_"], ["__", "_"]
 ]
 
 replace_words = [
-    ["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"],
+    ["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"],["Dslr", "DSLR"],
     ["&", "And"], ["'S", "s"], ["`S", "s"]
 ]
 
 replace_sources = [
-    ["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],
+    ["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],["Tutsplus", "TP"],["Tp", "TP"],
     ["Kelbyone", "KT"],["Kelby_Training", "KT"],["Kt", "KT"],["Lynda", "LDC"],["Ldc", "LDC"],
-    ["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Amherst_Media", "AM"],
-    ["Dslr", "DSLR"],["Digital_Photographer", "DP"],["Dp", "DP"],["Hdr", "HDR"],["__", "_"],["Cc", "CC"],
-    ["EPubs", "ePubs"],["Nra", "NRA"],["Gnomon", "GNOMON"],["Seo", "SEO"],["Indesign", "InDesign"], 
-    ["Skillshare", "SS"], ["Ss", "SS"], ["Phlearn","PHLEARN"]
+    ["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Udemy", "UDEMY"],
+    ["Digital_Photographer", "DP"],["Dp", "DP"],["Gnomon", "GNOMON"],["The_GNOMON_Workshop", "GNOMON"],
+    ["Seo", "SEO"],["Indesign", "InDesign"],["Skillshare", "SS"], ["Ss", "SS"], ["Phlearn","PHLEARN"],
+    ["Oreilly", "OREILLY"],["Que_Video","QUE"], ["Packt", "PACKT"],["Apress", "APRESS"], ["Fxphd", "FXPHD"],
+    ["Hdr", "HDR"],["Cc", "CC"],["EPubs", "ePubs"],["Ae", "AE"]
 ]
 
 def replace_space(fname):
@@ -121,8 +124,11 @@ for dirpath, dirs, files in os.walk(sourcedir):                  # Parse The Dir
 
         fname = replace_source(fname)                           # Standardize Source Prefixes
 
-        shutil.move(dirpath+"/"+f, dirpath+"/"+fname)           # Rename files
-        print ("mv "+dirpath+"/"+f+" "+dirpath+"/"+fname)       # Display changed filenames
+        move_source = os.path.join(dirpath,f)
+        move_target = os.path.join(dirpath,fname)
+
+        shutil.move(move_source, dirpath+"/"+fname)             # Rename files
+        print ("mv "+move_source+" "+move_target)               # Display changed filenames
 
 
 # --------------------------------------------------------
@@ -141,9 +147,11 @@ for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Dire
 
         dname = replace_source(dname)                           # Standardize Source Prefixes
 
+        move_source = os.path.join(dirpath,d)
+        move_target = os.path.join(dirpath,dname)
 
-        shutil.move(dirpath+"/"+d, dirpath+"/"+dname)           # Rename directories
-        print ("mv "+dirpath+"/"+d+" "+dirpath+"/"+dname)       # Display changed directories
+        shutil.move(move_source, move_target)                   # Rename directories
+        print ("mv "+move_source+" "+move_target)               # Display changed directories
 
 # --------------------------------------------------------
 # EOF
