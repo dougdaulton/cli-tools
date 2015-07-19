@@ -157,10 +157,6 @@ def find_move_reencode ( source_dir, exts_reencodes, target_reencodes ):
     for current_dir, sub_dirs, filenames in os.walk(source_dir,topdown=True):
         for f in filenames:
             if os.path.splitext(f)[1] in exts_reencodes:
-
-#                if options.test:
-#                    print "target_reencodes: "+target_reencodes, "\ncurrent_dir: "+current_dir
-
                 if current_dir is source_dir:
                     move_source = os.path.join(current_dir, f)
                     print colored("  + ","yellow"), f
@@ -175,7 +171,9 @@ def find_move_reencode ( source_dir, exts_reencodes, target_reencodes ):
                     shutil.move(move_source, move_target)
                 else:
                     print colored("     mv", "magenta", attrs=['bold']), colored(move_source,"blue"), colored(move_target,"green")
-                break
+                
+                if current_dir is not source_dir:
+                    break
 
     reencodes_moved = reencode_files_moved + reencode_folders_moved
 
