@@ -40,6 +40,9 @@
   alias plexsync-t="rsync -avn /VOLUMES/KMGN801/PLEX/Movies/ /VOLUMES/KODIAK4TB1/PLEX_MOVIES/"
 
   alias ISOpull='bash /home/bayaz/scripts/media-server/pull-from-ISO.sh'
+  alias py-test='bash /home/bayaz/scripts/tests.py'
+  alias py-rename='bash /home/bayaz/scripts/media-server/ms-tools/05-name-conform.py'
+  alias py-mover='bash /home/bayaz/scripts/media-server/ms-tools/01-file-mover.py'  alias ISOpull='bash /home/bayaz/scripts/media-server/pull-from-ISO.sh'
 
 # Aliases (Generic)
 # ------------------------------------------------------------
