@@ -39,10 +39,10 @@
   alias plexsync="rsync -av /VOLUMES/KMGN801/PLEX/Movies/ /VOLUMES/KODIAK4TB1/PLEX_MOVIES/"
   alias plexsync-t="rsync -avn /VOLUMES/KMGN801/PLEX/Movies/ /VOLUMES/KODIAK4TB1/PLEX_MOVIES/"
 
-  alias ISOpull='bash /home/bayaz/scripts/media-server/pull-from-ISO.sh'
-  alias py-test='bash /home/bayaz/scripts/tests.py'
-  alias py-rename='bash /home/bayaz/scripts/media-server/ms-tools/05-name-conform.py'
-  alias py-mover='bash /home/bayaz/scripts/media-server/ms-tools/01-file-mover.py'  alias ISOpull='bash /home/bayaz/scripts/media-server/pull-from-ISO.sh'
+  alias mm-isopull='bash /home/bayaz/git/mediaman/libs/acquire/pull-from-ISO.sh'
+  alias mm-test='bash /home/bayaz/git/mediaman/tests.py'
+  alias mm-rename='bash /home/bayaz/git/mediaman/libs/files/sanitize-filenames.py'
+  alias mm-mover='bash /home/bayaz/git/mediaman/libs/files/find-and-move-files.py'
 
 # Aliases (Generic)
 # ------------------------------------------------------------
