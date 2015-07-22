@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#-*- coding: utf-8 -*-
 
 # --------------------------------------------------------
 # Parse Directory and conforms all filenames as follows:
@@ -29,12 +30,17 @@
 import sys 
 import os 
 import shutil
+import unicodedata
+
 from optparse import OptionParser
+from termcolor import colored
+
 
 # Set sourcedir
 # --------------------------------------------------------
 parser = OptionParser()
 parser.add_option("-d", dest="dir")
+parser.add_option("-t", action="store_true", dest="test")
 
 (options, args) = parser.parse_args()
 
@@ -44,115 +50,99 @@ else:
     sourcedir = options.dir
 
 
-# Cruft Removal Definitions & Functions
+# Remove & Replace Lists (rnr_list)
 # --------------------------------------------------------
 
 remove_chars = [
-    ["#",""],["%", ""],[":", ""],["'", ""],[",", ""],["(", ""],[")", ""], 
-    ["{", ""], ["}", ""], ["[", ""], ["]", ""], ["!", ""]
+    ["#",""],["%",""],[":",""],["'",""],[",",""],["(",""],[")",""], 
+    ["{",""],["}",""],["[",""],["]",""],["!",""]
 ]
 
 remove_words = [
-    ["YIFY", ""],["ETRG", ""],["[ www.Torrenting.com ] - ", ""], ["{AceMerlin}", ""],
-    ["_Sum1_Here", ""]
+    ["_X264",""],["Symposium",""],["Archery",""],["_ROUTED",""]
 ]
 
-def remove_char(fname):
-    for item in remove_chars:
-        fname = fname.replace(item[0], item[1])
-    return fname   
-
-def remove_word(fname):
-    for item in remove_words:
-        fname = fname.replace(item[0], item[1])
-    return fname   
-    
-
-# Standardization Definitions & Functions
-# --------------------------------------------------------
 
 replace_spaces = [
-    [" ", "_"], [".", "_"], ["-", "_"],["+", "_"],["_-_", "_"], 
-    ["___", "_"], ["__", "_"]
+    [" ","_"],[".","_"],["-","_"],["+","_"],["_-_","_"],["_–_","_"],["-","_"], 
+    ["~~~","_"],["___","_"],["__","_"],[" - ","_"],["_«_","_"],[" ","_"]
 ]
 
 replace_words = [
-    ["1080P", "1080"], ["1080p", "1080"], ["720P", "720"],["720p", "720"],["Dslr", "DSLR"],
-    ["&", "And"], ["'S", "s"], ["`S", "s"]
+    ["1080P","1080"],["1080p","1080"],["720P","720"],["720p","720"],["Dslr","DSLR"],
+    ["&","And"],["'S","s"],["`S","s"]
 ]
 
-replace_sources = [
-    ["Digital Tutors", "DT"],["Digital_Tutors", "DT"],["Dt", "DT"],["Tutsplus", "TP"],["Tp", "TP"],
-    ["Kelbyone", "KT"],["Kelby_Training", "KT"],["Kt", "KT"],["Lynda", "LDC"],["Ldc", "LDC"],
-    ["New_Masters_Academy", "NMA"],["Nma", "NMA"],["Skillfeed", "SF"],["Sf", "SF"],["Udemy", "UDEMY"],
-    ["Digital_Photographer", "DP"],["Dp", "DP"],["Gnomon", "GNOMON"],["The_GNOMON_Workshop", "GNOMON"],
-    ["Seo", "SEO"],["Indesign", "InDesign"],["Skillshare", "SS"], ["Ss", "SS"], ["Phlearn","PHLEARN"],
-    ["Oreilly", "OREILLY"],["Que_Video","QUE"], ["Packt", "PACKT"],["Apress", "APRESS"], ["Fxphd", "FXPHD"],
-    ["Hdr", "HDR"],["Cc", "CC"],["EPubs", "ePubs"],["Ae", "AE"]
+replace_fixes = [
+    ["Dt","DT"],["Tutsplus","TP"],["Tp","TP"],["Kt","KT"],["Ldc","LDC"],["Nma","NMA"],["Sf","SF"],
+    ["Dp","DP"],["Seo","SEO"],["Skillshare","SS"],["Ss","SS"],["Hdr","HDR"],["Ppc","PPC"],["Cd","CD"],
+    ["Video_Copilot","VPC"]
 ]
 
-def replace_space(fname):
-    for item in replace_spaces:
-        fname = fname.replace(item[0], item[1])
-    return fname 
-    
-def replace_word(fname):
-    for item in replace_words:
-        fname = fname.replace(item[0], item[1])
-    return fname    
-    
-def replace_source(fname):
-    for item in replace_sources:
-        fname = fname.replace(item[0], item[1])
-    return fname         
+
+# Remove and Replace Functions
+# --------------------------------------------------------
+
+def remove_and_replace ( old_name, rnr_list ):
+    for item in rnr_list:
+        old_name = old_name.replace(item[0], item[1])
+    return old_name 
 
 
 # --------------------------------------------------------
 # Execute Standards Rename: FILENAMES
 # --------------------------------------------------------
 
-for dirpath, dirs, files in os.walk(sourcedir):                  # Parse The Directory
+for dirpath, dirs, files in os.walk(sourcedir):                     # Parse The Directory
     for f in files:
-        fname, fext = os.path.splitext(f)                       # Split files into basename & ext
-        fname = remove_word(fname)                              # Remove unwanted words
-        fname = remove_char(fname)                              # Remove unwanted characters
-        fname = replace_space(fname)                            # Standardize spaces & space markers 
-        fname = replace_word(fname)                             # Standardize filename elements
-        fname = fname.rstrip('_')                               # Remove trailing underscore(s)
+        print f
+        fname, fext = os.path.splitext(f)                           # Split files into basename & ext
+        fname = remove_and_replace(fname,remove_words)              # Remove unwanted words
+        fname = remove_and_replace(fname,remove_chars)              # Remove unwanted characters
+        fname = remove_and_replace(fname,replace_spaces)            # Standardize spaces & space markers 
+        fname = remove_and_replace(fname,replace_words)             # Standardize filename elements
+        fname = fname.rstrip('_')                                   # Remove trailing underscore(s)
 
-        fname = fname.title()+fext.lower()                      # Assemble filename and apply case conversions
+        fname = fname.title()+fext.lower()                          # Assemble filename and apply case conversions
 
-        fname = replace_source(fname)                           # Standardize Source Prefixes
+        fname = remove_and_replace(fname,replace_fixes)             # Fix required capitialization
 
         move_source = os.path.join(dirpath,f)
         move_target = os.path.join(dirpath,fname)
+        
+        if not options.test:
+            shutil.move(move_source, move_target)                   # Rename files
 
-        shutil.move(move_source, dirpath+"/"+fname)             # Rename files
-        print ("mv "+move_source+" "+move_target)               # Display changed filenames
+        print colored("OFN:","blue"),colored(move_source,"green")   # Display changed filenames
+        print colored("NFN:","cyan"), move_target,"\n"
 
 
 # --------------------------------------------------------
 # Execute Standards Rename: DIRECTORIES
 # --------------------------------------------------------
-
-for dirpath, dirs, files in os.walk(sourcedir):                 # Parse The Directory
+""""
+for dirpath, dirs, files in os.walk(sourcedir):                     # Parse The Directory
     for d in dirs:	
-        dname = remove_word(d)                                  # Remove unwanted words
-        dname = remove_char(dname)                              # Remove unwanted characters
-        dname = replace_space(dname)                            # Standardize spaces & space markers 
-        dname = replace_word(dname)                             # Standardize filename elements
-        dname = dname.rstrip('_')                               # Remove trailing underscore(s)
+        print d 
+        dname = remove_and_replace(d,remove_words)                  # Remove unwanted words
+        dname = remove_and_replace(dname,remove_chars)              # Remove unwanted characters
+        dname = remove_and_replace(dname,replace_spaces)            # Standardize spaces & space markers 
+        dname = remove_and_replace(dname,replace_words)             # Standardize filename elements
+        dname = dname.rstrip('_')                                   # Remove trailing underscore(s)
 
-        dname = dname.title()                                   # Reset Directory Name to Title Case
+        dname = dname.title()                                       # Reset Directory Name to Title Case
 
-        dname = replace_source(dname)                           # Standardize Source Prefixes
+        dname = remove_and_replace(dname,replace_fixes)             # Fix required capitialization
 
         move_source = os.path.join(dirpath,d)
         move_target = os.path.join(dirpath,dname)
 
-        shutil.move(move_source, move_target)                   # Rename directories
-        print ("mv "+move_source+" "+move_target)               # Display changed directories
+        if not options.test:
+            shutil.move(move_source, move_target)                   # Rename files
 
+        print colored("ODN:","blue"),colored(move_source,"yellow")  # Display changed filenames
+        print colored("NDN:","cyan"), move_target,"\n"
+"""
 # --------------------------------------------------------
 # EOF
 # --------------------------------------------------------	

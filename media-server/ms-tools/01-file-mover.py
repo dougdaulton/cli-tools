@@ -26,6 +26,7 @@
 import sys 
 import os 
 import shutil
+import unicodedata
 
 from inspect import getmembers
 from pprint import pprint
